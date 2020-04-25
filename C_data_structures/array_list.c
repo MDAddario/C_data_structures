@@ -1,19 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*
- *   FOR THE MOMENT, ACCEPT THE FACT THAT WE ARE ONLY WORKING WITH INTEGERS
- */
-#define DTYPE int
-
-// Struct for the array list
-typedef struct struct_AL {
-
-	DTYPE* array;	// Underlying array
-	int size;		// Number of elements in the array
-	int capacity;	// Total capacity of the array
-	
-} AL;
+#include "array_list.h"
 
 // Constructor
 AL* new_AL(int capacity) {
@@ -140,27 +128,11 @@ int AL_size(AL* list) {
 	return list->size;
 }
 
-/*	"Method" list:
- *
- *	new() 
- *	add_at()
- *	add_start()
- *	add_end()
- *	clear()
- *	contains()
- *	get()
- *	index_of()
- *	is_empty()
- *	remove_at()
- *	remove_value()
- *	size()
- */
-
 // The main attraction
 int main(int argc, char* argv[]) {
 	
 	
 	
 	
-	
+	return 0;
 }
