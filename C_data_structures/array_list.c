@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "array_list.h"
 
 // Constructor
@@ -134,13 +132,4 @@ int AL_remove_value(AL* list, DTYPE value) {
 // Determine the size of the list
 int AL_size(AL* list) {
 	return list->size;
-}
-
-// Conduct unit tests for the array list package
-int main(int argc, char* argv[]) {
-	
-	
-	
-	
-	return 0;
 }
