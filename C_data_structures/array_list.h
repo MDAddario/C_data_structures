@@ -1,3 +1,6 @@
+#define TRUE 1
+#define FALSE 0
+#define DEFAULT_CAP 10
 #define BOOL char   // Treat booleans
 #define DTYPE long  // Data type of objects to store
 #define ATYPE short // Data type for the size of the underlying array

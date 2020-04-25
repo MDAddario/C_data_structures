@@ -9,7 +9,7 @@ AL* new_AL(ATYPE capacity) {
 
 	// Format the capacity
 	if (capacity < 1)
-		list->capacity = 10;
+		list->capacity = DEFAULT_CAP;
 	else
 		list->capacity = capacity;
 
@@ -83,10 +83,10 @@ BOOL AL_contains(AL* list, DTYPE value) {
 
 	// Value not in list
 	if (index == -1)
-		return 0;
+		return FALSE;
 
 	// Value in list
-	return 1;
+	return TRUE;
 }
 
 // Return an element from the list
@@ -132,11 +132,11 @@ BOOL AL_remove_value(AL* list, DTYPE value) {
 
 	// Value not in list
 	if (index == -1)
-		return 0;
+		return FALSE;
 
 	// Value in list
 	AL_remove_at(list, index);
-	return 1;
+	return TRUE;
 }
 
 // Determine the size of the list
