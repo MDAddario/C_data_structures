@@ -54,7 +54,7 @@ void AL_add_start(AL* list, DTYPE value) {
 void AL_add_end(AL* list, DTYPE value) {
 	
 	// Add to position zero
-	AL_add_at(list, value, list.size);
+	AL_add_at(list, value, list->size);
 	return;
 }
 
@@ -69,11 +69,16 @@ void AL_clear(AL* list) {
 // Check if the list contains a value
 int AL_contains(AL* list, DTYPE value) {
 	
-	// Scan the array
-	for (int j = 0; j < list->size; j++)
-		if (list->array[j] == value)
-			return 1;
-	return 0;
+	// Find index value
+	int index = AL_index_of(list, value);
+	
+	// Value not in list
+	if (index == -1)
+		return 0
+	
+	// Value in list
+	return 1;
+}
 }
 
 // Return an element from the list
@@ -114,13 +119,16 @@ void AL_remove_at(AL* list, int index) {
 // Remove a given value from list
 int AL_remove_value(AL* list, DTYPE value) {
 	
-	// Scan the array
-	for (int j = 0; j < list->size; j++)
-		if (list->array[j] == value) {
-			AL_remove_at(list, j);
-			return 1;
-		}
-	return 0;
+	// Find index value
+	int index = AL_index_of(list, value);
+	
+	// Value not in list
+	if (index == -1)
+		return 0
+	
+	// Value in list
+	AL_remove_at(list, j);
+	return 1;
 }
 
 // Determine the size of the list
