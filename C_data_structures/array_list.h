@@ -1,9 +1,9 @@
 #define TRUE 1
 #define FALSE 0
 #define DEFAULT_CAP 10
-#define BOOL char   // Treat booleans
-#define DTYPE long  // Data type of objects to store
-#define ATYPE short // Data type for the size of the underlying array
+#define BOOL char    // Treat booleans
+#define DTYPE short  // Data type of objects to store
+#define ATYPE long   // Data type for the size of the underlying array
 
 /*
  *   NOTE THAT THE DTYPE MUST BE COMPARABLE VIA == OPERATION
@@ -18,8 +18,8 @@ typedef struct struct_AL {
 
 } AL;
 
-AL*   new_AL(                                 ATYPE capacity);
-void  free_AL(         AL* list);
+AL*   new_AL(                                 ATYPE capacity);   // TESTED
+void  free_AL(         AL* list);                                // TESTED
 void  AL_add_at(       AL* list, DTYPE value, ATYPE index);
 void  AL_add_start(    AL* list, DTYPE value);
 void  AL_add_end(      AL* list, DTYPE value);
