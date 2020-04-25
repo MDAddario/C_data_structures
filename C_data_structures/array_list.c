@@ -100,7 +100,7 @@ int AL_is_empty(AL* list) {
 }
 
 // Remove element at given index
-int AL_remove_at(AL* list, int index) {
+void AL_remove_at(AL* list, int index) {
 	
 	// Shift all the elements back
 	for (int j = index; j < list->size; j++)
@@ -128,7 +128,7 @@ int AL_size(AL* list) {
 	return list->size;
 }
 
-// The main attraction
+// Conduct unit tests for the array list package
 int main(int argc, char* argv[]) {
 	
 	
