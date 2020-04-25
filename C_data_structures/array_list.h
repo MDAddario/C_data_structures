@@ -16,6 +16,7 @@ typedef struct struct_AL {
 } AL;
 
 AL*   new_AL(                                 ATYPE capacity);
+void  free_AL(         AL* list);
 void  AL_add_at(       AL* list, DTYPE value, ATYPE index);
 void  AL_add_start(    AL* list, DTYPE value);
 void  AL_add_end(      AL* list, DTYPE value);

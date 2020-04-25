@@ -21,6 +21,17 @@ AL* new_AL(ATYPE capacity) {
 	return list;
 }
 
+// Destructor
+void free_AL(AL* list) {
+
+	// Free the underlying array
+	free(list->array);
+
+	// Free the array list
+	free(list);
+	return;
+}
+
 // Add element to the array list at given position
 void AL_add_at(AL* list, DTYPE value, ATYPE index) {
 
