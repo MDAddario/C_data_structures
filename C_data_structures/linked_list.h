@@ -2,7 +2,7 @@
 #define FALSE 0
 #define BOOL char    // Treat booleans
 #define DTYPE short  // Data type of objects to store
-#define ATYPE int    // Data type of size of linked list
+#define ATYPE long   // Data type of size of linked list
 
 /*
  *   NOTE THAT THE DTYPE MUST BE COMPARABLE VIA == OPERATION

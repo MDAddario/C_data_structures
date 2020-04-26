@@ -202,6 +202,172 @@ int main() {
 
 /*****************************************************************/
 
+/*****************************************************************/
+
+	// Conduct linked list unit tests
+	printf("===== CONDUCTING LINKED LIST UNIT TESTS =====\n");
+
+	// new_LL()
+	ATYPE capacity = 431;
+	LL* list = new_LL();
+	assert_ATYPE(list->size, 0, "new_LL()");
+	assert_DTYPE(list->head, null, "new_LL()");
+	assert_DTYPE(list->tail, null, "new_LL()");
+
+	// free_LL()
+	printf("Testing memory management: ");
+	for (int i = 0; i < 10; i++) {
+		LL* list_2 = new_LL();
+		for (long j = 0; j < 1000000; j++) {
+			LL_add_end(list, 321);
+		}
+		free_LL(list_2);
+		printf("%d%% ", (i + 1) * 10);
+	}
+	printf("\n");
+
+	DTYPE offsets[] = {1000, 2000, 3000};
+
+	// LL_add_start()
+	DTYPE value;
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[0];
+		LL_add_start(list, value);
+		assert_ATYPE(list->size, size, "LL_add_start()");
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = LL_get(list, index);
+		assert_DTYPE(value, offsets[0] + capacity - index, "LL_add_start()");
+		assert_ATYPE(list->size, capacity, "LL_add_start()");
+	}
+
+	// LL_add_end()
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[1];
+		LL_add_end(list, value);
+		assert_ATYPE(list->size, size + capacity, "LL_end()");
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = list->array[index + capacity];
+		assert_DTYPE(value, offsets[1] + index + 1, "LL_end()");
+		assert_ATYPE(list->size, 2 * capacity, "LL_end()");
+	}
+
+	// LL_add_at()
+	LL_add_at(list, offsets[2], capacity);
+	assert_ATYPE(list->size, 2 * capacity + 1, "LL_add_at()");
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = LL_get(list, index);
+		assert_DTYPE(value, offsets[0] + capacity - index, "LL_add_at()");
+		value = list->array[index + capacity + 1];
+		assert_DTYPE(value, offsets[1] + index + 1, "LL_add_at()");
+	}
+	value = list->array[capacity];
+	assert_DTYPE(value, offsets[2], "LL_add_at()");
+
+	assert_BOOL(FALSE, LL_add_at(list, offsets[0], -1), "LL_add_at()");
+	assert_BOOL(FALSE, LL_add_at(list, offsets[0], 2 * capacity + 2), "LL_add_at()");
+
+	// LL_get()
+	for (ATYPE index = 0; index < 4 * capacity; index++) {
+
+		value = LL_get(list, index);
+		assert_DTYPE(value, LL_get(list, index), "LL_get()");
+	}
+
+	// LL_size()
+	assert_ATYPE(list->size, LL_size(list), "LL_size()");
+	assert_ATYPE(2 * capacity + 1, LL_size(list), "LL_size()");
+
+	// LL_clear()
+	LL_clear(list);
+	assert_ATYPE(LL_size(list), 0, "LL_clear()");
+
+	// LL_is_empty()
+	assert_BOOL(LL_is_empty(list), TRUE, "LL_is_empty()");
+	list->size = 2 * capacity + 1;
+	assert_BOOL(LL_is_empty(list), FALSE, "LL_is_empty()");
+
+	// LL_index_of()
+	ATYPE location;
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		location = LL_index_of(list, offsets[0] + capacity - index);
+		assert_ATYPE(index, location, "LL_index_of()");
+		location = LL_index_of(list, offsets[1] + index + 1);
+		assert_ATYPE(index + capacity + 1, location, "LL_index_of()");
+	}
+	location = LL_index_of(list, offsets[2]);
+	assert_ATYPE(capacity, location, "LL_index_of()");
+
+	// LL_contains()
+	for (DTYPE increment = 1; increment <= capacity; increment++) {
+
+		assert_BOOL(TRUE, LL_contains(list, offsets[0] + increment), "LL_contains()");
+		assert_BOOL(TRUE, LL_contains(list, offsets[1] + increment), "LL_contains()");
+		assert_BOOL(FALSE, LL_contains(list, offsets[0] - increment), "LL_contains()");
+		assert_BOOL(FALSE, LL_contains(list, offsets[1] - increment), "LL_contains()");
+	}
+	assert_BOOL(TRUE, LL_contains(list, offsets[2]), "LL_contains()");
+
+	// Pray this still holds
+	assert_ATYPE(list->size, 2 * capacity + 1, "LL_prayers()");
+
+	// LL_remove_at()
+	assert_BOOL(FALSE, LL_remove_at(list, -1), "LL_remove_at()");
+	assert_BOOL(FALSE, LL_remove_at(list, 2 * capacity + 1), "LL_remove_at()");
+
+	assert_BOOL(TRUE, LL_remove_at(list, capacity), "LL_remove_at()");
+	assert_ATYPE(2 * capacity, LL_size(list), "LL_remove_at()");
+	assert_ATYPE(2 * capacity, list->size, "LL_remove_at()");
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = LL_get(list, index);
+		assert_DTYPE(value, offsets[0] + capacity - index, "LL_remove_at()");
+		value = list->array[index + capacity];
+		assert_DTYPE(value, offsets[1] + index + 1, "LL_remove_at()");
+	}
+
+	// LL_remove_value()
+	assert_BOOL(FALSE, LL_remove_value(list, -1), "LL_remove_value()");
+	assert_BOOL(FALSE, LL_remove_value(list, offsets[2]), "LL_remove_value()");
+
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[0];
+		assert_BOOL(TRUE, LL_remove_value(list, value), "LL_remove_value()");
+		assert_ATYPE(list->size, 2 * capacity - size, "LL_remove_value()");
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = LL_get(list, index);
+		assert_DTYPE(value, offsets[1] + index + 1, "LL_remove_remove_value()");
+	}
+
+	for (ATYPE index = 0; index < capacity; index++)
+		assert_BOOL(TRUE, LL_remove_last(list), "LL_remove_value()");
+
+	assert_ATYPE(list->size, 0, "LL_remove_value()");
+	assert_DTYPE(list->head, null, "LL_remove_value()");
+	assert_DTYPE(list->tail, null, "LL_remove_value()");
+	assert_BOOL(TRUE, LL_is_empty(list), "LL_remove_value()");
+
+	// Completes linked list unit tests
+	printf("===== COMPLETED LINKED LIST UNIT TESTS =====\n");
+
+/*****************************************************************/
+/*****************************************************************/
+
 	// All tests pass
 	printf("\n===== ALL TESTS HAVE PASSED! =====\n");
 	return 0;
