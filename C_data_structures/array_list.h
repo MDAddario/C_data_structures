@@ -28,6 +28,6 @@ BOOL  AL_contains(     AL* list, DTYPE value);                   // TESTED
 DTYPE AL_get(          AL* list,              ATYPE index);      // TESTED
 ATYPE AL_index_of(     AL* list, DTYPE value);                   // TESTED
 BOOL  AL_is_empty(     AL* list);                                // TESTED
-void  AL_remove_at(    AL* list,              ATYPE index);      // 
+BOOL  AL_remove_at(    AL* list,              ATYPE index);      // 
 BOOL  AL_remove_value( AL* list, DTYPE value);                   // 
 ATYPE AL_size(         AL* list);                                // TESTED

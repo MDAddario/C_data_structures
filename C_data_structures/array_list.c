@@ -122,13 +122,19 @@ BOOL AL_is_empty(AL* list) {
 // Remove element at given index
 void AL_remove_at(AL* list, ATYPE index) {
 
+	// Make sure index makes sense
+	if (index >= list->size || index < 0) {
+		printf("Index specified for AL_remove_at() is rubbish.\n");
+		return FALSE;
+	}
+
 	// Shift all the elements back
 	for (ATYPE j = index; j < list->size; j++)
 		list->array[j] = list->array[j + 1];
 
 	// Reduce the size
 	list->size--;
-	return;
+	return TRUE;
 }
 
 // Remove a given value from list
