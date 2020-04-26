@@ -68,12 +68,22 @@ void LL_add_start(LL* list, DTYPE value) {
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
 	node->prev = null;
-	node->next = list->head;
 	node->element = value;
 
 	// Update the linked list
-	list->head->prev = node;
-	list->head = node;
+	if (LL_is_empty(list)) {
+
+		node->next = null;
+		list->head = node;
+		list->tail = node;
+
+	} else {
+
+		node->next = list->head;
+		list->head->prev = node;
+		list->head = node;
+	}
+
 	list->size++;
 	return;
 }
