@@ -109,6 +109,8 @@ void LL_clear(LL* list) {
 	}
 
 	// Set size to zero
+	list->head = null;
+	list->tail = null;
 	list->size = 0;
 	return;
 }
@@ -221,6 +223,12 @@ BOOL LL_remove_start(LL* list) {
 	list->head = list->head->next;
 	free(head);
 	list->size--;
+
+	// Fix empty lists
+	if (LL_is_empty(list)) {
+		list->head = null;
+		list->tail = null;
+	}
 	return TRUE;
 }
 
@@ -238,6 +246,12 @@ BOOL LL_remove_end(LL* list) {
 	list->tail = list->tail->prev;
 	free(tail);
 	list->size--;
+
+	// Fix empty lists
+	if (LL_is_empty(list)) {
+		list->head = null;
+		list->tail = null;
+	}
 	return TRUE;
 }
 
