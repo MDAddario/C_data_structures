@@ -5,19 +5,12 @@
 // Constructor
 LL* new_LL(ATYPE capacity) {
 
-	// Allocate the memory for an array list
+	// Allocate the memory for a linked list
 	LL* list = (LL*)malloc(sizeof(LL));
 
-	// Format the capacity
-	if (capacity < 1)
-		list->capacity = DEFAULT_CAP;
-	else
-		list->capacity = capacity;
-
-	// Create the hidden array
-	list->array = (DTYPE*)malloc(list->capacity * sizeof(DTYPE));
-
 	// Start with zero elements
+	list->head = null;
+	list->tail = null;
 	list->size = 0;
 	return list;
 }
@@ -25,10 +18,18 @@ LL* new_LL(ATYPE capacity) {
 // Destructor
 void free_LL(LL* list) {
 
-	// Free the underlying array
-	free(list->array);
+	// Free all the nodes
+	ND* node = list->head;
+	ND* next;
 
-	// Free the array list
+	while (node != null) {
+
+		next = node->next;
+		free(node);
+		node = next;
+	}
+
+	// Free the linked list
 	free(list);
 	return;
 }
@@ -39,7 +40,7 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 	// Make sure index makes sense
 	if (index > list->size || index < 0) {
 		printf("Index specified for LL_add_at() is rubbish.\n");
-		return FLLSE;
+		return FALSE;
 	}
 
 	// Expand array if needed
@@ -90,7 +91,7 @@ BOOL LL_contains(LL* list, DTYPE value) {
 
 	// Value not in list
 	if (index == -1)
-		return FLLSE;
+		return FALSE;
 
 	// Value in list
 	return TRUE;
@@ -131,7 +132,7 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for LL_remove_at() is rubbish.\n");
-		return FLLSE;
+		return FALSE;
 	}
 
 	// Shift all the elements back
@@ -151,7 +152,7 @@ BOOL LL_remove_value(LL* list, DTYPE value) {
 
 	// Value not in list
 	if (index == -1)
-		return FLLSE;
+		return FALSE;
 
 	// Value in list
 	return LL_remove_at(list, index);
