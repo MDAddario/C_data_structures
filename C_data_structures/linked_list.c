@@ -19,15 +19,7 @@ LL* new_LL(ATYPE capacity) {
 void free_LL(LL* list) {
 
 	// Free all the nodes
-	ND* node = list->head;
-	ND* next;
-
-	while (node != null) {
-
-		next = node->next;
-		free(node);
-		node = next;
-	}
+	LL_clear(list);
 
 	// Free the linked list
 	free(list);
@@ -53,24 +45,9 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 		return TRUE;
 	}
 
-	// Choose whether to start from the head or the tail
-	ND* prev, next;
-	if (index < list->size / 2) {
-
-		prev = list->head;
-		for (ATYPE j = 0; j < index - 1; j++)
-			prev = prev->next;
-		next = prev->next;
-
-	}
-	else {
-
-		next = list->tail;
-		for (ATYPE j = index; j < list->size - 1; j++)
-			next = next->prev;
-		prev = next->prev;
-
-	}
+	// Isolate neighboring nodes
+	ND* next = LL_get(list, index);
+	ND* prev = next->prev;
 
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
@@ -120,6 +97,17 @@ void LL_add_end(LL* list, DTYPE value) {
 // Clear the list
 void LL_clear(LL* list) {
 
+	// Free all the nodes
+	ND* node = list->head;
+	ND* next;
+
+	while (node != null) {
+
+		next = node->next;
+		free(node);
+		node = next;
+	}
+
 	// Set size to zero
 	list->size = 0;
 	return;
@@ -148,8 +136,22 @@ DTYPE LL_get(LL* list, ATYPE index) {
 		return 0;
 	}
 
-	// Retrieve element from array
-	return list->array[index];
+	// Choose whether to start from the head or the tail
+	ND* node;
+	if (index < list->size / 2) {
+
+		node = list->head;
+		for (ATYPE j = 0; j < index; j++)
+			node = node->next;
+
+	} else {
+
+		node = list->tail;
+		for (ATYPE j = index; j < list->size - 1; j++)
+			node = node->prev;
+
+	}
+	return node;
 }
 
 // Return the index corresponding to a value
