@@ -20,14 +20,14 @@ typedef struct struct_AL {
 
 AL*   new_AL(                                 ATYPE capacity);   // TESTED
 void  free_AL(         AL* list);                                // TESTED
-void  AL_add_at(       AL* list, DTYPE value, ATYPE index);
-void  AL_add_start(    AL* list, DTYPE value);
-void  AL_add_end(      AL* list, DTYPE value);
-void  AL_clear(        AL* list);
-BOOL  AL_contains(     AL* list, DTYPE value);
-DTYPE AL_get(          AL* list,              ATYPE index);
-ATYPE AL_index_of(     AL* list, DTYPE value);
-BOOL  AL_is_empty(     AL* list);
+void  AL_add_at(       AL* list, DTYPE value, ATYPE index);      // TESTED
+void  AL_add_start(    AL* list, DTYPE value);                   // TESTED
+void  AL_add_end(      AL* list, DTYPE value);                   // TESTED
+void  AL_clear(        AL* list);                                // TESTED
+BOOL  AL_contains(     AL* list, DTYPE value);                   // TESTED
+DTYPE AL_get(          AL* list,              ATYPE index);      // TESTED
+ATYPE AL_index_of(     AL* list, DTYPE value);                   // TESTED
+BOOL  AL_is_empty(     AL* list);                                // TESTED
 void  AL_remove_at(    AL* list,              ATYPE index);
 BOOL  AL_remove_value( AL* list, DTYPE value);
-ATYPE AL_size(         AL* list);
+ATYPE AL_size(         AL* list);                                // TESTED
