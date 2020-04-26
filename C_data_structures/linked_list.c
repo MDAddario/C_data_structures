@@ -186,16 +186,17 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 		return FALSE;
 	}
 
-
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for LL_remove_at() is rubbish.\n");
 		return FALSE;
 	}
 
+/*
 	// Shift all the elements back
 	for (ATYPE j = index; j < list->size; j++)
 		list->array[j] = list->array[j + 1];
+*/
 
 	// Reduce the size
 	list->size--;
@@ -205,13 +206,35 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 // Remove first value
 BOOL LL_remove_start(LL* list) {
 
-	return LL_remove_at(list, 0);
+	// Ensure there is a value to remove
+	if (LL_is_empty(list)) {
+		printf("Cannot remove elements from an empty list.\n");
+		return FALSE;
+	}
+
+	// Isolate and free the head
+	ND* head = list->head;
+	list->head = list->head->next;
+	free(head);
+	list->size--;
+	return TRUE;
 }
 
 // Remove last value
 BOOL LL_remove_end(LL* list) {
 
-	return LL_remove_at(list, list->size - 1);
+	// Ensure there is a value to remove
+	if (LL_is_empty(list)) {
+		printf("Cannot remove elements from an empty list.\n");
+		return FALSE;
+	}
+
+	// Isolate and free the tail
+	ND* tail = list->tail;
+	list->tail = list->tail->prev;
+	free(tail);
+	list->size--;
+	return TRUE;
 }
 
 // Remove a given value from list
