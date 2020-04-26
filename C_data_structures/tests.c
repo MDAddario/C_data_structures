@@ -123,21 +123,6 @@ int main() {
 		assert_DTYPE(value, AL_get(list, index), "AL_get()");
 	}
 
-	// Hardcoded testing case
-	if (capacity == 5) {
-		assert_DTYPE(1005, AL_get(list, 0), "AL_hard()");
-		assert_DTYPE(1004, AL_get(list, 1), "AL_hard()");
-		assert_DTYPE(1003, AL_get(list, 2), "AL_hard()");
-		assert_DTYPE(1002, AL_get(list, 3), "AL_hard()");
-		assert_DTYPE(1001, AL_get(list, 4), "AL_hard()");
-		assert_DTYPE(3000, AL_get(list, 5), "AL_hard()");
-		assert_DTYPE(2001, AL_get(list, 6), "AL_hard()");
-		assert_DTYPE(2002, AL_get(list, 7), "AL_hard()");
-		assert_DTYPE(2003, AL_get(list, 8), "AL_hard()");
-		assert_DTYPE(2004, AL_get(list, 9), "AL_hard()");
-		assert_DTYPE(2005, AL_get(list, 10), "AL_hard()");
-	}
-
 	// AL_size()
 	assert_ATYPE(list->size, AL_size(list), "AL_size()");
 	assert_ATYPE(2 * capacity + 1, AL_size(list), "AL_size()");
@@ -177,9 +162,47 @@ int main() {
 	assert_ATYPE(list->size, 2 * capacity + 1, "AL_prayers()");
 	assert_ATYPE(list->capacity, 4 * capacity, "AL_prayers()");
 
+	// AL_remove_at()
+	assert_BOOL(FALSE, AL_remove_at(list, -1), "AL_remove_at()");
+	assert_BOOL(FALSE, AL_remove_at(list, 2 * capacity + 1), "AL_remove_at()");
+
+	assert_BOOL(TRUE, AL_remove_at(list, capacity), "AL_remove_at()");
+	assert_ATYPE(2 * capacity, AL_size(list), "AL_remove_at()");
+	assert_ATYPE(2 * capacity, list->size, "AL_remove_at()");
+	assert_ATYPE(4 * capacity, list->capacity, "AL_remove_at()");
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = list->array[index];
+		assert_DTYPE(value, offsets[0] + capacity - index, "AL_remove_at()");
+		value = list->array[index + capacity];
+		assert_DTYPE(value, offsets[1] + index + 1, "AL_remove_at()");
+	}
+
+	// AL_remove_value()
+	assert_BOOL(FALSE, AL_remove_value(list, -1), "AL_remove_value()");
+	assert_BOOL(FALSE, AL_remove_value(list, offsets[2]), "AL_remove_value()");
+
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[0];
+		assert_BOOL(TRUE, AL_remove_value(list, value), "AL_remove_value()");
+		assert_ATYPE(list->size, 2 * capacity - size, "AL_remove_value()");
+		assert_ATYPE(list->capacity, 4 * capacity, "AL_remove_value()");
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = AL_get(list, index);
+		assert_DTYPE(value, offsets[1] + index + 1, "AL_remove_remove_value()");
+	}
+
+	// Completes array list unit tests
+	printf("===== COMPLETED ARRAY LIST UNIT TESTS =====\n");
+
 /*****************************************************************/
 
 	// All tests pass
-	printf("===== ALL TESTS HAVE PASSED! =====\n");
+	printf("\n===== ALL TESTS HAVE PASSED! =====\n");
 	return 0;
 }

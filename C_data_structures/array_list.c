@@ -120,7 +120,7 @@ BOOL AL_is_empty(AL* list) {
 }
 
 // Remove element at given index
-void AL_remove_at(AL* list, ATYPE index) {
+BOOL AL_remove_at(AL* list, ATYPE index) {
 
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
@@ -148,8 +148,7 @@ BOOL AL_remove_value(AL* list, DTYPE value) {
 		return FALSE;
 
 	// Value in list
-	AL_remove_at(list, index);
-	return TRUE;
+	return AL_remove_at(list, index);
 }
 
 // Determine the size of the list
