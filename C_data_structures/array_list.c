@@ -122,7 +122,7 @@ ATYPE AL_index_of(AL* list, DTYPE value) {
 // Determine if array is empty
 BOOL AL_is_empty(AL* list) {
 
-	return !list->size;
+	return !AL_size(list);
 }
 
 // Remove element at given index

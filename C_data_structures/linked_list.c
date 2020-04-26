@@ -157,17 +157,24 @@ DTYPE LL_get(LL* list, ATYPE index) {
 // Return the index corresponding to a value
 ATYPE LL_index_of(LL* list, DTYPE value) {
 
-	// Scan the array
-	for (ATYPE j = 0; j < list->size; j++)
-		if (list->array[j] == value)
-			return j;
+	// Run through the nodes
+	ND* node = list->head;
+	ATYPE index = 0;
+
+	while (node != null) {
+
+		if (node->element == value)
+			return index;
+		node = node->next;
+		index++;
+	}
 	return -1;
 }
 
 // Determine if array is empty
 BOOL LL_is_empty(LL* list) {
 
-	return !list->size;
+	return !LL_size(list);
 }
 
 // Remove element at given index
