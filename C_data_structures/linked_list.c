@@ -91,6 +91,12 @@ void LL_add_start(LL* list, DTYPE value) {
 // Add element to the end of the array list
 void LL_add_end(LL* list, DTYPE value) {
 
+	// If array is empty, add at start
+	if (LL_is_empty(list)) {
+		LL_add_start(list, value);
+		return;
+	}
+
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
 	node->prev = list->tail;

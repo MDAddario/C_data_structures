@@ -127,7 +127,7 @@ int main() {
 	assert_BOOL(FALSE, AL_add_at(array_list, offsets[0], 2 * capacity + 2), "AL_add_at()");
 
 	// AL_get()
-	for (ATYPE index = 0; index < 4 * capacity; index++) {
+	for (ATYPE index = 0; index < 2 * capacity; index++) {
 
 		value = array_list->array[index];
 		assert_DTYPE(value, AL_get(array_list, index), "AL_get()");
@@ -138,13 +138,32 @@ int main() {
 	assert_ATYPE(2 * capacity + 1, AL_size(array_list), "AL_size()");
 
 	// AL_clear()
+	assert_BOOL(AL_is_empty(array_list), FALSE, "AL_is_empty()");
 	AL_clear(array_list);
 	assert_ATYPE(AL_size(array_list), 0, "AL_clear()");
 
 	// AL_is_empty()
 	assert_BOOL(AL_is_empty(array_list), TRUE, "AL_is_empty()");
-	array_list->size = 2 * capacity + 1;
-	assert_BOOL(AL_is_empty(array_list), FALSE, "AL_is_empty()");
+
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[0];
+		AL_add_start(array_list, value);
+		value = (DTYPE)size + offsets[1];
+		AL_add_end(array_list, value);
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = AL_get(array_list, index);
+		assert_DTYPE(value, offsets[0] + capacity - index, "AL_clear()");
+		value = AL_get(array_list, index + capacity);
+		assert_DTYPE(value, offsets[1] + index + 1, "AL_clear()");
+		assert_ATYPE(array_list->size, 2 * capacity, "AL_clear()");
+	}
+	AL_add_at(array_list, offsets[2], capacity);
+	value = AL_get(array_list, capacity);
+	assert_DTYPE(value, offsets[2], "AL_add_at()");
 
 	// AL_index_of()
 	ATYPE location;
@@ -243,8 +262,8 @@ int main() {
 	printf("Testing memory management: ");
 	for (int i = 0; i < 10; i++) {
 		LL* linked_list_2 = new_LL();
-		for (long j = 0; j < 1000000; j++) {
-			LL_add_end(linked_list, 321);
+		for (long j = 0; j < 10000000; j++) {
+			LL_add_end(linked_list_2, 321);
 		}
 		free_LL(linked_list_2);
 		printf("%d%% ", (i + 1) * 10);
@@ -309,16 +328,33 @@ int main() {
 	assert_ATYPE(linked_list->size, LL_size(linked_list), "LL_size()");
 	assert_ATYPE(2 * capacity + 1, LL_size(linked_list), "LL_size()");
 
-	/*
 	// LL_clear()
+	assert_BOOL(LL_is_empty(linked_list), FALSE, "LL_is_empty()");
 	LL_clear(linked_list);
 	assert_ATYPE(LL_size(linked_list), 0, "LL_clear()");
 
 	// LL_is_empty()
 	assert_BOOL(LL_is_empty(linked_list), TRUE, "LL_is_empty()");
-	linked_list->size = 2 * capacity + 1;
-	assert_BOOL(LL_is_empty(linked_list), FALSE, "LL_is_empty()");
-	*/
+
+	for (ATYPE size = 1; size <= capacity; size++) {
+
+		value = (DTYPE)size + offsets[0];
+		LL_add_start(linked_list, value);
+		value = (DTYPE)size + offsets[1];
+		LL_add_end(linked_list, value);
+	}
+
+	for (ATYPE index = 0; index < capacity; index++) {
+
+		value = LL_get(linked_list, index);
+		assert_DTYPE(value, offsets[0] + capacity - index, "LL_clear()");
+		value = LL_get(linked_list, index + capacity);
+		assert_DTYPE(value, offsets[1] + index + 1, "LL_clear()");
+		assert_ATYPE(linked_list->size, 2 * capacity, "LL_clear()");
+	}
+	LL_add_at(linked_list, offsets[2], capacity);
+	value = LL_get(linked_list, capacity);
+	assert_DTYPE(value, offsets[2], "LL_add_at()");
 
 	// LL_index_of()
 	for (ATYPE index = 0; index < capacity; index++) {
