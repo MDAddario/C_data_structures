@@ -180,6 +180,13 @@ BOOL LL_is_empty(LL* list) {
 // Remove element at given index
 BOOL LL_remove_at(LL* list, ATYPE index) {
 
+	// Ensure there is a value to remove
+	if (LL_is_empty(list)) {
+		printf("Cannot remove elements from an empty list.\n");
+		return FALSE;
+	}
+
+
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for LL_remove_at() is rubbish.\n");
@@ -193,6 +200,18 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 	// Reduce the size
 	list->size--;
 	return TRUE;
+}
+
+// Remove first value
+BOOL LL_remove_start(LL* list) {
+
+	return LL_remove_at(list, 0);
+}
+
+// Remove last value
+BOOL LL_remove_end(LL* list) {
+
+	return LL_remove_at(list, list->size - 1);
 }
 
 // Remove a given value from list

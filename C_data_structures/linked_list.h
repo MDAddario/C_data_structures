@@ -37,5 +37,7 @@ DTYPE LL_get(          LL* list,              ATYPE index);      //
 ATYPE LL_index_of(     LL* list, DTYPE value);                   // 
 BOOL  LL_is_empty(     LL* list);                                // 
 BOOL  LL_remove_at(    LL* list,              ATYPE index);      // 
+BOOL  LL_remove_start( LL* list);                                // 
+BOOL  LL_remove_end(   LL* list);                                // 
 BOOL  LL_remove_value( LL* list, DTYPE value);                   // 
 ATYPE LL_size(         LL* list);                                // 

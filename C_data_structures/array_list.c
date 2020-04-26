@@ -128,6 +128,12 @@ BOOL AL_is_empty(AL* list) {
 // Remove element at given index
 BOOL AL_remove_at(AL* list, ATYPE index) {
 
+	// Ensure there is a value to remove
+	if (AL_is_empty(list)) {
+		printf("Cannot remove elements from an empty list.\n");
+		return FALSE;
+	}
+
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for AL_remove_at() is rubbish.\n");
@@ -141,6 +147,18 @@ BOOL AL_remove_at(AL* list, ATYPE index) {
 	// Reduce the size
 	list->size--;
 	return TRUE;
+}
+
+// Remove first value
+BOOL AL_remove_start(AL* list) {
+
+	return AL_remove_at(list, 0);
+}
+
+// Remove last value
+BOOL AL_remove_end(AL* list) {
+
+	return AL_remove_at(list, list->size - 1);
 }
 
 // Remove a given value from list

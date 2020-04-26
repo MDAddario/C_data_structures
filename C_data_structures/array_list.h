@@ -29,5 +29,7 @@ DTYPE AL_get(          AL* list,              ATYPE index);      // TESTED
 ATYPE AL_index_of(     AL* list, DTYPE value);                   // TESTED
 BOOL  AL_is_empty(     AL* list);                                // TESTED
 BOOL  AL_remove_at(    AL* list,              ATYPE index);      // TESTED
+BOOL  AL_remove_start( AL* list);                                // 
+BOOL  AL_remove_end(   AL* list);                                // 
 BOOL  AL_remove_value( AL* list, DTYPE value);                   // TESTED
 ATYPE AL_size(         AL* list);                                // TESTED
