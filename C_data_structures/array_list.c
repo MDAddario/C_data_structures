@@ -89,7 +89,7 @@ BOOL AL_contains(AL* list, DTYPE value) {
 	ATYPE index = AL_index_of(list, value);
 
 	// Value not in list
-	if (index == -1)
+	if (index == INDEX_NOT_FOUND)
 		return FALSE;
 
 	// Value in list
@@ -102,7 +102,7 @@ DTYPE AL_get(AL* list, ATYPE index) {
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for AL_get() is rubbish.\n");
-		return 0;
+		return DTYPE_NULL;
 	}
 
 	// Retrieve element from array
@@ -116,7 +116,7 @@ ATYPE AL_index_of(AL* list, DTYPE value) {
 	for (ATYPE j = 0; j < list->size; j++)
 		if (list->array[j] == value)
 			return j;
-	return -1;
+	return INDEX_NOT_FOUND;
 }
 
 // Determine if array is empty
@@ -168,7 +168,7 @@ BOOL AL_remove_value(AL* list, DTYPE value) {
 	ATYPE index = AL_index_of(list, value);
 
 	// Value not in list
-	if (index == -1)
+	if (index == INDEX_NOT_FOUND)
 		return FALSE;
 
 	// Value in list

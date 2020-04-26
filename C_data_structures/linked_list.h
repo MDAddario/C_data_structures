@@ -3,6 +3,8 @@
 #define BOOL char    // Treat booleans
 #define DTYPE short  // Data type of objects to store
 #define ATYPE long   // Data type of size of linked list
+#define DTYPE_NULL -393
+#define INDEX_NOT_FOUND -1
 
 /*
  *   NOTE THAT THE DTYPE MUST BE COMPARABLE VIA == OPERATION
@@ -26,13 +28,14 @@ typedef struct struct_LL {
 
 } LL;
 
-LL*   new_LL(                                 ATYPE capacity);   // TESTED
+LL*   new_LL();                                                  // TESTED
 void  free_LL(         LL* list);                                // TESTED
 BOOL  LL_add_at(       LL* list, DTYPE value, ATYPE index);      // TESTED
 void  LL_add_start(    LL* list, DTYPE value);                   // TESTED
 void  LL_add_end(      LL* list, DTYPE value);                   // TESTED
 void  LL_clear(        LL* list);                                // TESTED
 BOOL  LL_contains(     LL* list, DTYPE value);                   // TESTED
+ND*   LL_get_node(     LL* list,              ATYPE index);      // TESTED
 DTYPE LL_get(          LL* list,              ATYPE index);      // TESTED
 ATYPE LL_index_of(     LL* list, DTYPE value);                   // TESTED
 BOOL  LL_is_empty(     LL* list);                                // TESTED

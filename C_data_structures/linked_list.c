@@ -3,14 +3,14 @@
 #include "linked_list.h"
 
 // Constructor
-LL* new_LL(ATYPE capacity) {
+LL* new_LL() {
 
 	// Allocate the memory for a linked list
 	LL* list = (LL*)malloc(sizeof(LL));
 
 	// Start with zero elements
-	list->head = null;
-	list->tail = null;
+	list->head = NULL;
+	list->tail = NULL;
 	list->size = 0;
 	return list;
 }
@@ -46,7 +46,7 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 	}
 
 	// Isolate neighboring nodes
-	ND* next = LL_get(list, index);
+	ND* next = LL_get_node(list, index);
 	ND* prev = next->prev;
 
 	// Create new node
@@ -67,13 +67,13 @@ void LL_add_start(LL* list, DTYPE value) {
 
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
-	node->prev = null;
+	node->prev = NULL;
 	node->element = value;
 
 	// Update the linked list
 	if (LL_is_empty(list)) {
 
-		node->next = null;
+		node->next = NULL;
 		list->head = node;
 		list->tail = node;
 
@@ -94,7 +94,7 @@ void LL_add_end(LL* list, DTYPE value) {
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
 	node->prev = list->tail;
-	node->next = null;
+	node->next = NULL;
 	node->element = value;
 
 	// Update the linked list
@@ -111,7 +111,7 @@ void LL_clear(LL* list) {
 	ND* node = list->head;
 	ND* next;
 
-	while (node != null) {
+	while (node != NULL) {
 
 		next = node->next;
 		free(node);
@@ -119,8 +119,8 @@ void LL_clear(LL* list) {
 	}
 
 	// Set size to zero
-	list->head = null;
-	list->tail = null;
+	list->head = NULL;
+	list->tail = NULL;
 	list->size = 0;
 	return;
 }
@@ -132,20 +132,20 @@ BOOL LL_contains(LL* list, DTYPE value) {
 	ATYPE index = LL_index_of(list, value);
 
 	// Value not in list
-	if (index == -1)
+	if (index == INDEX_NOT_FOUND)
 		return FALSE;
 
 	// Value in list
 	return TRUE;
 }
 
-// Return an element from the list
-DTYPE LL_get(LL* list, ATYPE index) {
+// Return a node from the list
+ND* LL_get_node(LL* list, ATYPE index) {
 
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
-		printf("Index specified for LL_get() is rubbish.\n");
-		return 0;
+		printf("Index specified for LL_get_node() is rubbish.\n");
+		return NULL;
 	}
 
 	// Choose whether to start from the head or the tail
@@ -166,6 +166,17 @@ DTYPE LL_get(LL* list, ATYPE index) {
 	return node;
 }
 
+// Return an element from the list
+DTYPE LL_get(LL* list, ATYPE index) {
+
+	// Locate the node
+	ND* node = LL_get_node(list, index);
+
+	if (node == NULL)
+		return DTYPE_NULL;
+	return node->element;
+}
+
 // Return the index corresponding to a value
 ATYPE LL_index_of(LL* list, DTYPE value) {
 
@@ -173,14 +184,14 @@ ATYPE LL_index_of(LL* list, DTYPE value) {
 	ND* node = list->head;
 	ATYPE index = 0;
 
-	while (node != null) {
+	while (node != NULL) {
 
 		if (node->element == value)
 			return index;
 		node = node->next;
 		index++;
 	}
-	return -1;
+	return INDEX_NOT_FOUND;
 }
 
 // Determine if array is empty
@@ -205,7 +216,7 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 	}
 
 	// Find the node to remove
-	ND* node = LL_get(list, index);
+	ND* node = LL_get_node(list, index);
 	ND* prev = node->prev;
 	ND* next = node->next;
 
@@ -236,8 +247,8 @@ BOOL LL_remove_start(LL* list) {
 
 	// Fix empty lists
 	if (LL_is_empty(list)) {
-		list->head = null;
-		list->tail = null;
+		list->head = NULL;
+		list->tail = NULL;
 	}
 	return TRUE;
 }
@@ -259,8 +270,8 @@ BOOL LL_remove_end(LL* list) {
 
 	// Fix empty lists
 	if (LL_is_empty(list)) {
-		list->head = null;
-		list->tail = null;
+		list->head = NULL;
+		list->tail = NULL;
 	}
 	return TRUE;
 }
@@ -272,7 +283,7 @@ BOOL LL_remove_value(LL* list, DTYPE value) {
 	ATYPE index = LL_index_of(list, value);
 
 	// Value not in list
-	if (index == -1)
+	if (index == INDEX_NOT_FOUND)
 		return FALSE;
 
 	// Value in list

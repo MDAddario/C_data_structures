@@ -1,9 +1,11 @@
 #define TRUE 1
 #define FALSE 0
-#define DEFAULT_CAP 10
 #define BOOL char    // Treat booleans
 #define DTYPE short  // Data type of objects to store
 #define ATYPE long   // Data type of size of the underlying array
+#define DEFAULT_CAP 10
+#define DTYPE_NULL -393
+#define INDEX_NOT_FOUND -1
 
 /*
  *   NOTE THAT THE DTYPE MUST BE COMPARABLE VIA == OPERATION
