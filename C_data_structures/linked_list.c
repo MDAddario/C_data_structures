@@ -192,11 +192,15 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 		return FALSE;
 	}
 
-/*
-	// Shift all the elements back
-	for (ATYPE j = index; j < list->size; j++)
-		list->array[j] = list->array[j + 1];
-*/
+	// Find the node to remove
+	ND* node = LL_get(list, index);
+	ND* prev = node->prev;
+	ND* next = node->next;
+
+	// Re-stitch the network
+	free(node);
+	prev->next = next;
+	next->prev = prev;
 
 	// Reduce the size
 	list->size--;
