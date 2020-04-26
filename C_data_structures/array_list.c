@@ -99,6 +99,12 @@ BOOL AL_contains(AL* list, DTYPE value) {
 // Return an element from the list
 DTYPE AL_get(AL* list, ATYPE index) {
 
+	// Make sure index makes sense
+	if (index >= list->size || index < 0) {
+		printf("Index specified for AL_get() is rubbish.\n");
+		return 0;
+	}
+
 	// Retrieve element from array
 	return list->array[index];
 }
