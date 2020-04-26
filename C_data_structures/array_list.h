@@ -3,7 +3,7 @@
 #define DEFAULT_CAP 10
 #define BOOL char    // Treat booleans
 #define DTYPE short  // Data type of objects to store
-#define ATYPE long   // Data type for the size of the underlying array
+#define ATYPE long   // Data type of size of the underlying array
 
 /*
  *   NOTE THAT THE DTYPE MUST BE COMPARABLE VIA == OPERATION

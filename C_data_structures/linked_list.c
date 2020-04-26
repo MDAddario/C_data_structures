@@ -1,0 +1,163 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "linked_list.h"
+
+// Constructor
+LL* new_LL(ATYPE capacity) {
+
+	// Allocate the memory for an array list
+	LL* list = (LL*)malloc(sizeof(LL));
+
+	// Format the capacity
+	if (capacity < 1)
+		list->capacity = DEFAULT_CAP;
+	else
+		list->capacity = capacity;
+
+	// Create the hidden array
+	list->array = (DTYPE*)malloc(list->capacity * sizeof(DTYPE));
+
+	// Start with zero elements
+	list->size = 0;
+	return list;
+}
+
+// Destructor
+void free_LL(LL* list) {
+
+	// Free the underlying array
+	free(list->array);
+
+	// Free the array list
+	free(list);
+	return;
+}
+
+// Add element to the array list at given position
+BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
+
+	// Make sure index makes sense
+	if (index > list->size || index < 0) {
+		printf("Index specified for LL_add_at() is rubbish.\n");
+		return FLLSE;
+	}
+
+	// Expand array if needed
+	if (list->size == list->capacity) {
+		list->capacity *= 2;
+		list->array = (DTYPE*)realloc(list->array, list->capacity * sizeof(DTYPE));
+	}
+
+	// Displace all elements that are after the index
+	for (ATYPE j = list->size - 1; j >= index; j--)
+		list->array[j + 1] = list->array[j];
+
+	// Add the value
+	list->array[index] = value;
+	list->size++;
+	return TRUE;
+}
+
+// Add element to the start of the array list
+void LL_add_start(LL* list, DTYPE value) {
+
+	// Add to position zero
+	LL_add_at(list, value, 0);
+	return;
+}
+
+// Add element to the end of the array list
+void LL_add_end(LL* list, DTYPE value) {
+
+	// Add to last position
+	LL_add_at(list, value, list->size);
+	return;
+}
+
+// Clear the list
+void LL_clear(LL* list) {
+
+	// Set size to zero
+	list->size = 0;
+	return;
+}
+
+// Check if the list contains a value
+BOOL LL_contains(LL* list, DTYPE value) {
+
+	// Find index value
+	ATYPE index = LL_index_of(list, value);
+
+	// Value not in list
+	if (index == -1)
+		return FLLSE;
+
+	// Value in list
+	return TRUE;
+}
+
+// Return an element from the list
+DTYPE LL_get(LL* list, ATYPE index) {
+
+	// Make sure index makes sense
+	if (index >= list->size || index < 0) {
+		printf("Index specified for LL_get() is rubbish.\n");
+		return 0;
+	}
+
+	// Retrieve element from array
+	return list->array[index];
+}
+
+// Return the index corresponding to a value
+ATYPE LL_index_of(LL* list, DTYPE value) {
+
+	// Scan the array
+	for (ATYPE j = 0; j < list->size; j++)
+		if (list->array[j] == value)
+			return j;
+	return -1;
+}
+
+// Determine if array is empty
+BOOL LL_is_empty(LL* list) {
+
+	return !list->size;
+}
+
+// Remove element at given index
+BOOL LL_remove_at(LL* list, ATYPE index) {
+
+	// Make sure index makes sense
+	if (index >= list->size || index < 0) {
+		printf("Index specified for LL_remove_at() is rubbish.\n");
+		return FLLSE;
+	}
+
+	// Shift all the elements back
+	for (ATYPE j = index; j < list->size; j++)
+		list->array[j] = list->array[j + 1];
+
+	// Reduce the size
+	list->size--;
+	return TRUE;
+}
+
+// Remove a given value from list
+BOOL LL_remove_value(LL* list, DTYPE value) {
+
+	// Find index value
+	ATYPE index = LL_index_of(list, value);
+
+	// Value not in list
+	if (index == -1)
+		return FLLSE;
+
+	// Value in list
+	return LL_remove_at(list, index);
+}
+
+// Determine the size of the list
+ATYPE LL_size(LL* list) {
+	return list->size;
+}
