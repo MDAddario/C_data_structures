@@ -26,18 +26,18 @@ typedef struct struct_LL {
 
 } LL;
 
-LL*   new_LL(                                 ATYPE capacity);   // 
-void  free_LL(         LL* list);                                // 
-BOOL  LL_add_at(       LL* list, DTYPE value, ATYPE index);      // 
-void  LL_add_start(    LL* list, DTYPE value);                   // 
-void  LL_add_end(      LL* list, DTYPE value);                   // 
-void  LL_clear(        LL* list);                                // 
-BOOL  LL_contains(     LL* list, DTYPE value);                   // 
-DTYPE LL_get(          LL* list,              ATYPE index);      // 
-ATYPE LL_index_of(     LL* list, DTYPE value);                   // 
-BOOL  LL_is_empty(     LL* list);                                // 
-BOOL  LL_remove_at(    LL* list,              ATYPE index);      // 
-BOOL  LL_remove_start( LL* list);                                // 
-BOOL  LL_remove_end(   LL* list);                                // 
-BOOL  LL_remove_value( LL* list, DTYPE value);                   // 
-ATYPE LL_size(         LL* list);                                // 
+LL*   new_LL(                                 ATYPE capacity);   // TESTED
+void  free_LL(         LL* list);                                // TESTED
+BOOL  LL_add_at(       LL* list, DTYPE value, ATYPE index);      // TESTED
+void  LL_add_start(    LL* list, DTYPE value);                   // TESTED
+void  LL_add_end(      LL* list, DTYPE value);                   // TESTED
+void  LL_clear(        LL* list);                                // TESTED
+BOOL  LL_contains(     LL* list, DTYPE value);                   // TESTED
+DTYPE LL_get(          LL* list,              ATYPE index);      // TESTED
+ATYPE LL_index_of(     LL* list, DTYPE value);                   // TESTED
+BOOL  LL_is_empty(     LL* list);                                // TESTED
+BOOL  LL_remove_at(    LL* list,              ATYPE index);      // TESTED
+BOOL  LL_remove_start( LL* list);                                // TESTED
+BOOL  LL_remove_end(   LL* list);                                // TESTED
+BOOL  LL_remove_value( LL* list, DTYPE value);                   // TESTED
+ATYPE LL_size(         LL* list);                                // TESTED

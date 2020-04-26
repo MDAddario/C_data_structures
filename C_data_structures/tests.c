@@ -197,6 +197,20 @@ int main() {
 		assert_DTYPE(value, offsets[1] + index + 1, "AL_remove_remove_value()");
 	}
 
+	// AL_remove_last()
+	for (ATYPE index = 0; index < capacity; index++)
+		assert_BOOL(TRUE, AL_remove_last(list), "AL_remove_last()");
+
+	assert_ATYPE(list->size, 0, "AL_remove_last()");
+	assert_BOOL(TRUE, AL_is_empty(list), "AL_remove_last()");
+
+	// AL_remove_first()
+	AL_add_end(list, 321);
+	assert_BOOL(TRUE, AL_remove_first(list), "AL_remove_first()");
+
+	assert_ATYPE(list->size, 0, "AL_remove_first()");
+	assert_BOOL(TRUE, AL_is_empty(list), "AL_remove_first()");
+
 	// Completes array list unit tests
 	printf("===== COMPLETED ARRAY LIST UNIT TESTS =====\n");
 
@@ -354,13 +368,23 @@ int main() {
 		assert_DTYPE(value, offsets[1] + index + 1, "LL_remove_remove_value()");
 	}
 
+	// LL_remove_last()
 	for (ATYPE index = 0; index < capacity; index++)
-		assert_BOOL(TRUE, LL_remove_last(list), "LL_remove_value()");
+		assert_BOOL(TRUE, LL_remove_last(list), "LL_remove_last()");
 
-	assert_ATYPE(list->size, 0, "LL_remove_value()");
-	assert_DTYPE(list->head, null, "LL_remove_value()");
-	assert_DTYPE(list->tail, null, "LL_remove_value()");
-	assert_BOOL(TRUE, LL_is_empty(list), "LL_remove_value()");
+	assert_ATYPE(list->size, 0, "LL_remove_last()");
+	assert_DTYPE(list->head, null, "LL_remove_last()");
+	assert_DTYPE(list->tail, null, "LL_remove_last()");
+	assert_BOOL(TRUE, LL_is_empty(list), "LL_remove_last()");
+
+	// LL_remove_first()
+	LL_add_end(list, 321);
+	assert_BOOL(TRUE, LL_remove_first(list), "LL_remove_first()");
+
+	assert_ATYPE(list->size, 0, "LL_remove_first()");
+	assert_DTYPE(list->head, null, "LL_remove_first()");
+	assert_DTYPE(list->tail, null, "LL_remove_first()");
+	assert_BOOL(TRUE, LL_is_empty(list), "LL_remove_first()");
 
 	// Completes linked list unit tests
 	printf("===== COMPLETED LINKED LIST UNIT TESTS =====\n");
