@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "array_list.h"
+#include "linked_list.h"
 
 void assert_ATYPE(ATYPE a, ATYPE b, char* title) {
 
