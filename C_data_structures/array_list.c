@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "array_list.h"
 
@@ -33,7 +34,13 @@ void free_AL(AL* list) {
 }
 
 // Add element to the array list at given position
-void AL_add_at(AL* list, DTYPE value, ATYPE index) {
+BOOL AL_add_at(AL* list, DTYPE value, ATYPE index) {
+
+	// Make sure index makes sense
+	if (index > list->size || index < 0) {
+		printf("Index specified for AL_add_at() is rubbish.\n");
+		return FALSE;
+	}
 
 	// Expand array if needed
 	if (list->size == list->capacity) {
@@ -48,7 +55,7 @@ void AL_add_at(AL* list, DTYPE value, ATYPE index) {
 	// Add the value
 	list->array[index] = value;
 	list->size++;
-	return;
+	return TRUE;
 }
 
 // Add element to the start of the array list

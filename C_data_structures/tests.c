@@ -113,6 +113,9 @@ int main() {
 	value = list->array[capacity];
 	assert_DTYPE(value, offsets[2], "AL_add_at()");
 
+	assert_BOOL(FALSE, AL_add_at(list, offsets[0], -1), "AL_add_at()");
+	assert_BOOL(FALSE, AL_add_at(list, offsets[0], 2 * capacity + 2), "AL_add_at()");
+
 	// AL_get()
 	for (ATYPE index = 0; index < 4 * capacity; index++) {
 
