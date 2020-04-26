@@ -11,9 +11,9 @@
 // Struct for the nodes
 typedef struct struct_ND {
 
-	struct struct_ND* next;      // Next node in LL
-	struct struct_ND* previous;  // Previous node in LL
-	DTYPE             element;   // Element stored at node
+	struct struct_ND* prev;     // Previous node in LL
+	struct struct_ND* next;     // Next node in LL
+	DTYPE             element;  // Element stored at node
 
 } ND;
 

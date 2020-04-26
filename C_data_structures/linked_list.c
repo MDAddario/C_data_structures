@@ -34,7 +34,7 @@ void free_LL(LL* list) {
 	return;
 }
 
-// Add element to the array list at given position
+// Add element to the linked list at given position
 BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 
 	// Make sure index makes sense
@@ -43,18 +43,44 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 		return FALSE;
 	}
 
-	// Expand array if needed
-	if (list->size == list->capacity) {
-		list->capacity *= 2;
-		list->array = (DTYPE*)realloc(list->array, list->capacity * sizeof(DTYPE));
+	// Handle head and tail separately
+	if (index == 0) {
+		LL_add_start(list, value);
+		return TRUE;
+	}
+	if (index == list->size) {
+		LL_add_end(list, value);
+		return TRUE;
 	}
 
-	// Displace all elements that are after the index
-	for (ATYPE j = list->size - 1; j >= index; j--)
-		list->array[j + 1] = list->array[j];
+	// Choose whether to start from the head or the tail
+	ND* prev, next;
+	if (index < list->size / 2) {
 
-	// Add the value
-	list->array[index] = value;
+		prev = list->head;
+		for (ATYPE j = 0; j < index - 1; j++)
+			prev = prev->next;
+		next = prev->next;
+
+	}
+	else {
+
+		next = list->tail;
+		for (ATYPE j = index; j < list->size - 1; j++)
+			next = next->prev;
+		prev = next->prev;
+
+	}
+
+	// Create new node
+	ND* node = (ND*)malloc(sizeof(ND));
+	node->prev = prev;
+	node->next = next;
+	node->element = value;
+
+	// Connect the network
+	prev->next = node;
+	next->prev = node;
 	list->size++;
 	return TRUE;
 }
@@ -62,16 +88,32 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 // Add element to the start of the array list
 void LL_add_start(LL* list, DTYPE value) {
 
-	// Add to position zero
-	LL_add_at(list, value, 0);
+	// Create new node
+	ND* node = (ND*)malloc(sizeof(ND));
+	node->prev = null;
+	node->next = list->head;
+	node->element = value;
+
+	// Update the linked list
+	list->head->prev = node;
+	list->head = node;
+	list->size++;
 	return;
 }
 
 // Add element to the end of the array list
 void LL_add_end(LL* list, DTYPE value) {
 
-	// Add to last position
-	LL_add_at(list, value, list->size);
+	// Create new node
+	ND* node = (ND*)malloc(sizeof(ND));
+	node->prev = list->tail;
+	node->next = null;
+	node->element = value;
+
+	// Update the linked list
+	list->tail->next = node;
+	list->tail = node;
+	list->size++;
 	return;
 }
 
