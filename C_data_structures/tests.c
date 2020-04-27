@@ -262,7 +262,7 @@ int main() {
 	printf("Testing memory management: ");
 	for (int i = 0; i < 10; i++) {
 		LL* linked_list_2 = new_LL();
-		for (long j = 0; j < 10000000; j++) {
+		for (long j = 0; j < 1000000; j++) {
 			LL_add_end(linked_list_2, 321);
 		}
 		free_LL(linked_list_2);
@@ -318,7 +318,7 @@ int main() {
 	assert_BOOL(FALSE, LL_add_at(linked_list, offsets[0], 2 * capacity + 2), "LL_add_at()");
 
 	// LL_get()
-	for (ATYPE index = 0; index < 4 * capacity; index++) {
+	for (ATYPE index = 0; index < 2 * capacity; index++) {
 
 		value = LL_get(linked_list, index);
 		assert_DTYPE(value, LL_get(linked_list, index), "LL_get()");

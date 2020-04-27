@@ -221,6 +221,13 @@ BOOL LL_remove_at(LL* list, ATYPE index) {
 		return FALSE;
 	}
 
+	// Handle head and tail separately
+	if (index == 0) 
+		return LL_remove_start(list);
+
+	if (index == list->size - 1)
+		return LL_remove_end(list);
+
 	// Find the node to remove
 	ND* node = LL_get_node(list, index);
 	ND* prev = node->prev;
@@ -245,17 +252,22 @@ BOOL LL_remove_start(LL* list) {
 		return FALSE;
 	}
 
-	// Isolate and free the head
-	ND* head = list->head;
-	list->head = list->head->next;
-	free(head);
-	list->size--;
+	// Deal with single remaining node
+	if (LL_size(list) == 1) {
 
-	// Fix empty lists
-	if (LL_is_empty(list)) {
+		free(list->head);
 		list->head = NULL;
 		list->tail = NULL;
+
+	} else {
+
+		// Isolate and free the head
+		ND* head = list->head;
+		list->head = list->head->next;
+		free(head);
+		list->size--;
 	}
+
 	return TRUE;
 }
 
@@ -268,17 +280,16 @@ BOOL LL_remove_end(LL* list) {
 		return FALSE;
 	}
 
+	// Deal with single remaining node
+	if (LL_size(list) == 1)
+		return LL_remove_start(list);
+
 	// Isolate and free the tail
 	ND* tail = list->tail;
 	list->tail = list->tail->prev;
 	free(tail);
 	list->size--;
 
-	// Fix empty lists
-	if (LL_is_empty(list)) {
-		list->head = NULL;
-		list->tail = NULL;
-	}
 	return TRUE;
 }
 
