@@ -27,7 +27,7 @@ void free_LL(LL* list) {
 }
 
 // Add element to the linked list at given position
-BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
+BOOL LL_add_at(LL* list, LL_DTYPE value, LL_STYPE index) {
 
 	// Make sure index makes sense
 	if (index > list->size || index < 0) {
@@ -63,7 +63,7 @@ BOOL LL_add_at(LL* list, DTYPE value, ATYPE index) {
 }
 
 // Add element to the start of the array list
-void LL_add_start(LL* list, DTYPE value) {
+void LL_add_start(LL* list, LL_DTYPE value) {
 
 	// Create new node
 	ND* node = (ND*)malloc(sizeof(ND));
@@ -89,7 +89,7 @@ void LL_add_start(LL* list, DTYPE value) {
 }
 
 // Add element to the end of the array list
-void LL_add_end(LL* list, DTYPE value) {
+void LL_add_end(LL* list, LL_DTYPE value) {
 
 	// If array is empty, add at start
 	if (LL_is_empty(list)) {
@@ -132,10 +132,10 @@ void LL_clear(LL* list) {
 }
 
 // Check if the list contains a value
-BOOL LL_contains(LL* list, DTYPE value) {
+BOOL LL_contains(LL* list, LL_DTYPE value) {
 
 	// Find index value
-	ATYPE index = LL_index_of(list, value);
+	LL_STYPE index = LL_index_of(list, value);
 
 	// Value not in list
 	if (index == INDEX_NOT_FOUND)
@@ -146,7 +146,7 @@ BOOL LL_contains(LL* list, DTYPE value) {
 }
 
 // Return a node from the list
-ND* LL_get_node(LL* list, ATYPE index) {
+ND* LL_get_node(LL* list, LL_STYPE index) {
 
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
@@ -159,13 +159,13 @@ ND* LL_get_node(LL* list, ATYPE index) {
 	if (index < list->size / 2) {
 
 		node = list->head;
-		for (ATYPE j = 0; j < index; j++)
+		for (LL_STYPE j = 0; j < index; j++)
 			node = node->next;
 
 	} else {
 
 		node = list->tail;
-		for (ATYPE j = index; j < list->size - 1; j++)
+		for (LL_STYPE j = index; j < list->size - 1; j++)
 			node = node->prev;
 
 	}
@@ -173,22 +173,22 @@ ND* LL_get_node(LL* list, ATYPE index) {
 }
 
 // Return an element from the list
-DTYPE LL_get(LL* list, ATYPE index) {
+LL_DTYPE LL_get(LL* list, LL_STYPE index) {
 
 	// Locate the node
 	ND* node = LL_get_node(list, index);
 
 	if (node == NULL)
-		return DTYPE_NULL;
+		return LL_DTYPE_NULL;
 	return node->element;
 }
 
 // Return the index corresponding to a value
-ATYPE LL_index_of(LL* list, DTYPE value) {
+LL_STYPE LL_index_of(LL* list, LL_DTYPE value) {
 
 	// Run through the nodes
 	ND* node = list->head;
-	ATYPE index = 0;
+	LL_STYPE index = 0;
 
 	while (node != NULL) {
 
@@ -207,7 +207,7 @@ BOOL LL_is_empty(LL* list) {
 }
 
 // Remove element at given index
-BOOL LL_remove_at(LL* list, ATYPE index) {
+BOOL LL_remove_at(LL* list, LL_STYPE index) {
 
 	// Ensure there is a value to remove
 	if (LL_is_empty(list)) {
@@ -294,10 +294,10 @@ BOOL LL_remove_end(LL* list) {
 }
 
 // Remove a given value from list
-BOOL LL_remove_value(LL* list, DTYPE value) {
+BOOL LL_remove_value(LL* list, LL_DTYPE value) {
 
 	// Find index value
-	ATYPE index = LL_index_of(list, value);
+	LL_STYPE index = LL_index_of(list, value);
 
 	// Value not in list
 	if (index == INDEX_NOT_FOUND)
@@ -308,6 +308,6 @@ BOOL LL_remove_value(LL* list, DTYPE value) {
 }
 
 // Determine the size of the list
-ATYPE LL_size(LL* list) {
+LL_STYPE LL_size(LL* list) {
 	return list->size;
 }
