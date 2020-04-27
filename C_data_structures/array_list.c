@@ -10,7 +10,7 @@ AL* new_AL(AL_STYPE capacity) {
 
 	// Format the capacity
 	if (capacity < 1)
-		list->capacity = DEFAULT_CAP;
+		list->capacity = AL_DEFAULT_CAP;
 	else
 		list->capacity = capacity;
 
@@ -114,7 +114,7 @@ AL_STYPE AL_index_of(AL* list, AL_DTYPE value) {
 
 	// Scan the array
 	for (AL_STYPE j = 0; j < list->size; j++)
-		if (list->array[j] == value)
+		if (AL_DTYPE_EQUALS((void*)&(list->array[j]), (void*)&(value)))
 			return j;
 	return INDEX_NOT_FOUND;
 }

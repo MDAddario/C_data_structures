@@ -1,11 +1,8 @@
 #include "define.h"
-#define LL_DTYPE      short  // Data type of objects to store
-#define LL_DTYPE_NULL -393   // NULL definition corresponding to DTYPE
-#define LL_STYPE      long   // Data type of size of linked list
-
-/*
- *   NOTE THAT THE LL_DTYPE MUST BE COMPARABLE VIA == OPERATION
- */
+#define LL_DTYPE        short         // Data type of objects to store
+#define LL_DTYPE_NULL   -393          // NULL definition corresponding to DTYPE
+#define LL_DTYPE_EQUALS short_equals  // Function used to compare LL_DTYPE values
+#define LL_STYPE        long          // Data type of size of linked list
 
 // Struct for the nodes
 typedef struct struct_ND {

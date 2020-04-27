@@ -1,12 +1,9 @@
 #include "define.h"
-#define AL_DTYPE      short  // Data type of objects to store
-#define AL_DTYPE_NULL -393   // NULL definition corresponding to AL_DTYPE
-#define AL_STYPE      long   // Data type of size of the underlying array
-#define DEFAULT_CAP   10
-
-/*
- *   NOTE THAT THE AL_DTYPE MUST BE COMPARABLE VIA == OPERATION
- */
+#define AL_DTYPE        double         // Data type of objects to store
+#define AL_DTYPE_NULL   -393          // NULL definition corresponding to AL_DTYPE
+#define AL_DTYPE_EQUALS double_equals  // Function used to compare AL_DTYPE values
+#define AL_STYPE        long          // Data type of size of the underlying array
+#define AL_DEFAULT_CAP     10         // Default capacity for array lists
 
 // Struct for the array list
 typedef struct struct_AL {

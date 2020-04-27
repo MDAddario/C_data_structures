@@ -192,7 +192,7 @@ LL_STYPE LL_index_of(LL* list, LL_DTYPE value) {
 
 	while (node != NULL) {
 
-		if (node->element == value)
+		if (LL_DTYPE_EQUALS((void*)&(node->element), (void*)&(value)))
 			return index;
 		node = node->next;
 		index++;

@@ -68,7 +68,7 @@ int main() {
 	AL_STYPE AL_capacity = 0;
 	AL* array_list = new_AL(AL_capacity);
 	assert_AL_STYPE(array_list->size, 0, "new_AL()");
-	assert_AL_STYPE(array_list->capacity, DEFAULT_CAP, "new_AL()");
+	assert_AL_STYPE(array_list->capacity, AL_DEFAULT_CAP, "new_AL()");
 
 	AL_capacity = 431;
 	array_list = new_AL(AL_capacity);
@@ -188,8 +188,10 @@ int main() {
 	for (AL_STYPE index = 0; index < AL_capacity; index++) {
 
 		AL_location = AL_index_of(array_list, AL_offsets[0] + AL_capacity - index);
+		printf("%ld, %ld\n", index, AL_location);
 		assert_AL_STYPE(index, AL_location, "AL_index_of()");
 		AL_location = AL_index_of(array_list, AL_offsets[1] + index + 1);
+		printf("%ld, %ld\n", index + AL_capacity + 1, AL_location);
 		assert_AL_STYPE(index + AL_capacity + 1, AL_location, "AL_index_of()");
 	}
 	AL_location = AL_index_of(array_list, AL_offsets[2]);
