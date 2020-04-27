@@ -265,9 +265,9 @@ BOOL LL_remove_start(LL* list) {
 		ND* head = list->head;
 		list->head = list->head->next;
 		free(head);
-		list->size--;
 	}
 
+	list->size--;
 	return TRUE;
 }
 
