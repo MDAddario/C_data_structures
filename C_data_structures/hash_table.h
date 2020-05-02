@@ -7,27 +7,17 @@
 #define VAL_DTYPE        int            // Data type of values
 #define KEY_DTYPE_EQUALS int_equals     // Function used to compare VAL_DTYPE
 
-// Struct for the array list
-typedef struct struct_AL {
+// Struct for the hash pairs
+typedef struct struct_HP {
 
-	AL_DTYPE* array;     // Underlying array
-	AL_STYPE  size;      // Number of elements in the array
-	AL_STYPE  capacity;  // Total capacity of the array
+	KEY_DTYPE key;    // Key
+	VAL_DTYPE value;  // Value
 
-} AL;
+} HP;
 
-AL*       new_AL(                                    AL_STYPE capacity);  
-void      free_AL(         AL* list);                                     
-BOOL      AL_add_at(       AL* list, AL_DTYPE value, AL_STYPE index);     
-void      AL_add_start(    AL* list, AL_DTYPE value);                     
-void      AL_add_end(      AL* list, AL_DTYPE value);                     
-void      AL_clear(        AL* list);                                     
-BOOL      AL_contains(     AL* list, AL_DTYPE value);                     
-AL_DTYPE  AL_get(          AL* list,                 AL_STYPE index);     
-AL_STYPE  AL_index_of(     AL* list, AL_DTYPE value);                     
-BOOL      AL_is_empty(     AL* list);                                     
-BOOL      AL_remove_at(    AL* list,                 AL_STYPE index);     
-BOOL      AL_remove_start( AL* list);                                     
-BOOL      AL_remove_end(   AL* list);                                     
-BOOL      AL_remove_value( AL* list, AL_DTYPE value);                     
-AL_STYPE  AL_size(         AL* list);                                     
+HP*        new_HP(                 KEY_DTYPE key, VAL_DTYPE value);....
+void       free_HP(      HP* pair);....................................
+KEY_DTYPE  HP_get_key(   HP* pair);....................................
+VAL_DTYPE  HP_get_value( HP* pair);....................................
+void       HP_set_key(   HP* pair, KEY_DTYPE key);.....................
+void       HP_set_value( HP* pair,                VAL_DTYPE value);....
