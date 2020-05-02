@@ -64,7 +64,6 @@ void HT_free(HT* table) {
 
 	// Free the table
 	free(table);
-	return;
 }
 
 // Put a hash pair into the table
@@ -215,7 +214,6 @@ void HT_rehash(HT* table) {
 
 	// Update the buckets
 	table->buckets = new_buckets;
-	return;
 }
 
 // Generate an array with all the keys in the table
