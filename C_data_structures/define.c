@@ -1,3 +1,5 @@
+#include <math.h>
+#include <string.h>
 #include "define.h"
 
 BOOL short_equals(const void * a, const void * b) {
@@ -14,4 +16,13 @@ BOOL long_equals(const void * a, const void * b) {
 
 BOOL double_equals(const void * a, const void * b) {
 	return (fabs(*(double*)a - *(double*)b) < EPSILON);
+}
+
+BOOL string_equals(const void * a, const void * b) {
+	return !strcmp((char*)a, (char*)b);
+}
+
+AL_STYPE string_hash (char* string) {
+
+	return Math.abs(key.hashCode())%this.numBuckets;
 }
