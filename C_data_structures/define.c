@@ -13,5 +13,5 @@ BOOL long_equals(const void * a, const void * b) {
 }
 
 BOOL double_equals(const void * a, const void * b) {
-	return (fabs(*(int*)a - *(int*)b) < EPSILON);
+	return (fabs(*(double*)a - *(double*)b) < EPSILON);
 }
