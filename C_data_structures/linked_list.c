@@ -113,6 +113,8 @@ void LL_add_end(LL* list, LL_DTYPE* value) {
 // Clear the list
 void LL_clear(LL* list) {
 
+	printf("WHY IS THIS RUNNING\n");
+
 	// Free all the nodes and their elements
 	ND* node = list->head;
 	ND* next;
