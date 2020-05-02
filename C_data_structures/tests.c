@@ -8,7 +8,6 @@ void assert_STYPE(STYPE a, STYPE b, char* title) {
 		printf("STYPE assertion failure at section %s.\n", title);
 		exit(0);
 	}
-	return;
 }
 
 void assert_AL_DTYPE(AL_DTYPE* a, AL_DTYPE* b, char* title) {
@@ -17,7 +16,6 @@ void assert_AL_DTYPE(AL_DTYPE* a, AL_DTYPE* b, char* title) {
 		printf("AL DTYPE assertion failure at section %s.\n", title);
 		exit(0);
 	}
-	return;
 }
 
 void assert_LL_DTYPE(LL_DTYPE* a, LL_DTYPE* b, char* title) {
@@ -26,7 +24,6 @@ void assert_LL_DTYPE(LL_DTYPE* a, LL_DTYPE* b, char* title) {
 		printf("LL DTYPE assertion failure at section %s.\n", title);
 		exit(0);
 	}
-	return;
 }
 
 void assert_BOOL(BOOL a, BOOL b, char* title) {
@@ -35,7 +32,6 @@ void assert_BOOL(BOOL a, BOOL b, char* title) {
 		printf("BOOL assertion failure at section %s.\n", title);
 		exit(0);
 	}
-	return;
 }
 
 void assert_NULL(void* ptr, char* title) {
@@ -44,7 +40,6 @@ void assert_NULL(void* ptr, char* title) {
 		printf("NULL assertion failure at section %s.\n", title);
 		exit(0);
 	}
-	return;
 }
 
 int main() {
@@ -596,7 +591,6 @@ int main() {
 	// Completes hash table unit tests
 	printf("===== COMPLETED HASH TABLE UNIT TESTS =====\n");
 	*/
-
 /*****************************************************************/
 
 	// All tests pass
