@@ -23,7 +23,6 @@ void LL_free(LL* list) {
 
 	// Free the linked list
 	free(list);
-	return;
 }
 
 // Add element to the linked list at given position
@@ -85,7 +84,6 @@ void LL_add_start(LL* list, LL_DTYPE* value) {
 	}
 
 	list->size++;
-	return;
 }
 
 // Add element to the end of the array list
@@ -107,7 +105,6 @@ void LL_add_end(LL* list, LL_DTYPE* value) {
 	list->tail->next = node;
 	list->tail = node;
 	list->size++;
-	return;
 }
 
 // Clear the list
@@ -131,7 +128,6 @@ void LL_clear(LL* list) {
 	list->head = NULL;
 	list->tail = NULL;
 	list->size = 0;
-	return;
 }
 
 // Check if the list contains a value
