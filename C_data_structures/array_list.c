@@ -33,7 +33,6 @@ void AL_free(AL* list) {
 
 	// Free the array list
 	free(list);
-	return;
 }
 
 // Add element to the array list at given position
@@ -63,18 +62,12 @@ BOOL AL_add_at(AL* list, AL_DTYPE* value, STYPE index) {
 
 // Add element to the start of the array list
 void AL_add_start(AL* list, AL_DTYPE* value) {
-
-	// Add to position zero
 	AL_add_at(list, value, 0);
-	return;
 }
 
 // Add element to the end of the array list
 void AL_add_end(AL* list, AL_DTYPE* value) {
-
-	// Add to last position
 	AL_add_at(list, value, list->size);
-	return;
 }
 
 // Clear the list
@@ -86,7 +79,6 @@ void AL_clear(AL* list) {
 
 	// Set size to zero
 	list->size = 0;
-	return;
 }
 
 // Check if the list contains a value

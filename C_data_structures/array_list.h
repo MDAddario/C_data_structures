@@ -2,7 +2,7 @@
 #define AL_DTYPE        Integer          // Data type of objects to store
 #define AL_DTYPE_EQUALS integer_equals   // Function used to compare objects
 #define AL_DTYPE_FREE   integer_free     // Function used to free objects
-#define AL_DEFAULT_CAP  10          // Default capacity for array lists
+#define AL_DEFAULT_CAP  10               // Default capacity for array lists
 
 // Struct for the array list
 typedef struct struct_AL {
