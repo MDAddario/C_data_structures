@@ -3,26 +3,81 @@
 #include "hash_table.h"
 
 // Constructor
-AL* new_AL(AL_STYPE capacity) {
+HP* new_HP(KEY_DTYPE key, VAL_DTYPE value) {
 
-	// Initialize fields
-	this.numEntries = 0;
-	this.numBuckets = initialCapacity;
+	// Allocate the memory for a hash pair
+	HP* pair = (HP*)malloc(sizeof(HP));
 
-	// Take care of an annoying case
-	if (this.numBuckets <= 0)
-		this.numBuckets = 10;
-
-	this.buckets = new ArrayList<>(this.numBuckets);
-
-	// Construct the buckets
-	for (int i = 0; i < this.numBuckets; i++)
-		this.buckets.add(new LinkedList<>());
-
+	// Set the fields
+	pair->key = key;
+	pair->value = value;
+	return pair;
 }
 
 // Destructor
-void free_HP(AL* list) {
+void free_HP(HP* pair) {
+
+	// Free the hash pair
+	free(pair);
+	return;
+}
+
+// Retrieve key
+KEY_DTYPE HP_get_key(HP* pair) {
+	return HP->key;
+}
+
+// Retrieve value
+VAL_DTYPE HP_get_value(HP* pair) {
+	return HP->value;
+}
+
+// Set key
+void HP_set_key(HP* pair, KEY_DTYPE key) {
+	HP->key = key;
+	return;
+}
+
+// Set value
+void HP_set_value(HP* pair, VAL_DTYPE value) {
+	HP->value = value;
+	return;
+}
+
+// Constructor
+HT* new_HT(AL_STYPE capacity) {
+
+	// Allocate the memory for the hash table
+	HT* table = (HT*)malloc(sizeof(HT));
+
+	// Initialize fields
+	table->num_entries = 0;
+	table->num_buckets = capacity;
+	table->max_load    = 0.75;
+
+	// Create the array list
+	table->buckets = new_AL(table->num_buckets);
+
+	// Construct the buckets
+	for (AL_STYPE j = 0; j < table->num_buckets; j++)
+		AL_add(table->buckets, new_LL());
+
+	// Return the table
+	return table;
+}
+
+// Destructor
+void free_HT(HT* table) {
+
+	// Free the buckets
+	for (AL_STYPE j = 0; j < table->num_buckets; j++)
+		free(AL_get(table->buckets, j));
+
+	// Free the array list
+	free(table->buckets);
+
+	// Free the table
+	free(table);
 	return;
 }
 

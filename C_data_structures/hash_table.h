@@ -25,10 +25,10 @@ void       HP_set_value( HP* pair,                VAL_DTYPE value);....
 // Struct for the hash table
 typedef struct struct_HT {
 
-	AL_STYPE      num_entries;  // Number of pairs in the table
-	AL_STYPE      num_buckets;  // Number of buckets
-	static double max_load;     // Maximum load factor
-	AL*           buckets;      // Array list of linked lists
+	AL_STYPE  num_entries;  // Number of pairs in the table
+	AL_STYPE  num_buckets;  // Number of buckets
+	double    max_load;     // Maximum load factor
+	AL*       buckets;      // Array list of linked lists
 
 } HT;
 
