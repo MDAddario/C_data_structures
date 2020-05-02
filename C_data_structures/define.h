@@ -1,8 +1,9 @@
 #define TRUE             1
 #define FALSE            0
-#define BOOL             int
-#define INDEX_NOT_FOUND  -1
-#define EPSILON          0.000001
+#define BOOL             int       // Natural C type for booleans
+#define STYPE            long      // Dtype for the size of data structures
+#define INDEX_NOT_FOUND  -1l
+#define EPSILON          0.000001  // Double comparison tolerance
 
 // Wrapper classes
 typedef struct struct_integer {

@@ -1,4 +1,5 @@
 #include "array_list.h"
+#define KEY_HASH string_hash     // Function to create hash value from key
 
 // Hash functions
 AL_STYPE  string_hash (char* string, AL_STYPE num_buckets);
