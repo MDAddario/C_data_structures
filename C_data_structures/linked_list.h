@@ -1,4 +1,3 @@
-#include "define.h"
 #include "hash_pair.h"
 #define LL_DTYPE        HP*             // Data type of objects to store
 #define LL_DTYPE_NULL   NULL            // NULL definition corresponding to DTYPE
@@ -39,3 +38,5 @@ BOOL      LL_remove_start( LL* list);
 BOOL      LL_remove_end(   LL* list);                                
 BOOL      LL_remove_value( LL* list, LL_DTYPE value);                
 LL_STYPE  LL_size(         LL* list);                                
+
+BOOL      LL_equals(const void * a, const void * b);                 

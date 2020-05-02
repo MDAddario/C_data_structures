@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array_list.h"
-#include "linked_list.h"
 #include "hash_table.h"
 
 void assert_AL_STYPE(AL_STYPE a, AL_STYPE b, char* title) {

@@ -21,3 +21,10 @@ void free_HP(HP* pair) {
 	free(pair);
 	return;
 }
+
+// Comparison operator
+BOOL HP_equals(const void * a, const void * b) {
+
+	return KEY_DTYPE_EQUALS((void*)&(((HP*)a)->key), (void*)&(((HP*)b)->key))
+	    && VAL_DTYPE_EQUALS((void*)&(((HP*)a)->value), (void*)&(((HP*)b)->value));
+}

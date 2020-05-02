@@ -24,7 +24,7 @@ HT* new_HT(AL_STYPE capacity) {
 
 	// Construct the buckets
 	for (AL_STYPE j = 0; j < table->num_buckets; j++)
-		AL_add(table->buckets, new_LL());
+		AL_add_end(table->buckets, new_LL());
 
 	// Return the table
 	return table;
@@ -49,7 +49,7 @@ void free_HT(HT* table) {
 VAL_DTYPE HT_put(HT* table, KEY_DTYPE key, VAL_DTYPE value) {
 
 	// Retrieve hash_value
-	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
+	AL_STYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
 	LL* bucket = AL_get(table->buckets, hash_value);
@@ -62,7 +62,7 @@ VAL_DTYPE HT_put(HT* table, KEY_DTYPE key, VAL_DTYPE value) {
 		HP* pair = node->element;
 
 		// Check if key already exists
-		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key))) {
 
 			// Update value and return old value
 			VAL_DTYPE old_value = pair->value;
@@ -74,11 +74,11 @@ VAL_DTYPE HT_put(HT* table, KEY_DTYPE key, VAL_DTYPE value) {
 	}
 
 	// Add hash_pair to bucket
-	LL_add(bucket, new_HP(key, value));
+	LL_add_end(bucket, new_HP(key, value));
 	table->num_entries++;
 
 	// Consider rehashing
-	if (((double) table->num_entries) / table->num_buckets > max_load)
+	if (((double) table->num_entries) / table->num_buckets > table->max_load)
 		HT_rehash(table);
 
 	return VAL_DTYPE_NULL;
@@ -88,7 +88,7 @@ VAL_DTYPE HT_put(HT* table, KEY_DTYPE key, VAL_DTYPE value) {
 VAL_DTYPE HT_get(HT* table, KEY_DTYPE key) {
 
 	// Retrieve hash_value
-	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
+	AL_STYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
 	LL* bucket = AL_get(table->buckets, hash_value);
@@ -101,7 +101,7 @@ VAL_DTYPE HT_get(HT* table, KEY_DTYPE key) {
 		HP* pair = node->element;
 
 		// Check if key already exists
-		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key))) {
 
 			// Return value
 			return pair->value;
@@ -118,7 +118,7 @@ VAL_DTYPE HT_get(HT* table, KEY_DTYPE key) {
 VAL_DTYPE HT_remove(HT* table, KEY_DTYPE key) {
 
 	// Retrieve hash_value
-	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
+	AL_STYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
 	LL* bucket = AL_get(table->buckets, hash_value);
@@ -131,11 +131,11 @@ VAL_DTYPE HT_remove(HT* table, KEY_DTYPE key) {
 		HP* pair = node->element;
 
 		// Check if key already exists
-		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key))) {
 
 			// Delete hash_pair and return value
 			VAL_DTYPE value = pair->value;
-			LL_remove(bucket, pair);
+			LL_remove_value(bucket, pair);
 			table->num_entries--;
 			return value;
 		}
@@ -156,7 +156,7 @@ void HT_rehash(HT* table) {
 	// Construct the new buckets
 	AL* new_buckets = new_AL(table->num_buckets);
 	for (AL_STYPE j = 0; j < table->num_buckets; j++)
-		AL_add(new_buckets, new_LL());
+		AL_add_end(new_buckets, new_LL());
 
 	// Migrate all the old hash_pairs
 	for (AL_STYPE j = 0; j < table->num_buckets / 2; j++) {
@@ -165,20 +165,20 @@ void HT_rehash(HT* table) {
 		LL* old_bucket = AL_get(table->buckets, j);
 
 		// Run through the bucket nodes
-		ND* node = bucket->head;
+		ND* node = old_bucket->head;
 		while (node != NULL) {
 
 			// Extract the hash pair
 			HP* pair = node->element;
 
 			// Retrieve hash_value
-			AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
+			AL_STYPE hash_value = KEY_HASH(pair->key, table->num_buckets);
 
 			// Isolate the bucket in question
 			LL* new_bucket = AL_get(new_buckets, hash_value);
 
 			// Add the hash_pair to the new bucket
-			LL_add(new_bucket, pair);
+			LL_add_end(new_bucket, pair);
 
 			node = node->next;
 		}

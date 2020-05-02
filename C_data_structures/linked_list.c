@@ -311,3 +311,8 @@ BOOL LL_remove_value(LL* list, LL_DTYPE value) {
 LL_STYPE LL_size(LL* list) {
 	return list->size;
 }
+
+// Comparison operator (DOES NOT MATTER FOR THE PURPOSES OF A HASH TABLE)
+BOOL LL_equals(const void * a, const void * b) {
+	return TRUE;
+}

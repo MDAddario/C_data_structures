@@ -1,3 +1,4 @@
+#include "define.h"
 #define KEY_DTYPE        char*          // Data type of keys
 #define KEY_DTYPE_EQUALS string_equals  // Function used to compare KEY_DTYPE
 #define KEY_HASH         string_hash    // Function to create hash value from key
@@ -13,5 +14,7 @@ typedef struct struct_HP {
 
 } HP;
 
-HP*        new_HP(           KEY_DTYPE key, VAL_DTYPE value);
-void       free_HP(HP* pair);                                
+HP*   new_HP(           KEY_DTYPE key, VAL_DTYPE value);
+void  free_HP(HP* pair);                                
+
+BOOL  HP_equals(const void * a, const void * b);
