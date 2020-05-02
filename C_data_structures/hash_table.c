@@ -187,34 +187,57 @@ VAL_DTYPE HT_remove(HT* table, KEY_DTYPE key) {
 void HT_rehash(HT* table) {
 
 	// Double capacity
-	this.numBuckets *= 2;
+	table->num_buckets *= 2;
 
 	// Construct the new buckets
-	ArrayList<LinkedList<HashPair<K,V>>> newBuckets = new ArrayList<>(this.numBuckets);
-	for (int i = 0; i < this.numBuckets; i++)
-		newBuckets.add(new LinkedList<>());
+	AL* new_buckets = new_AL(table->num_buckets);
+	for (AL_STYPE j = 0; j < table->num_buckets; j++)
+		AL_add(new_buckets, new_LL());
 
-	// Migrate all the old hashPairs
-	for (LinkedList<HashPair<K,V>> oldBucket: this.buckets)
-		for (HashPair<K,V> hashPair: oldBucket) {
+	// Migrate all the old hash_pairs
+	for (AL_STYPE j = 0; j < table->num_buckets / 2; j++) {
 
-			// Retrieve hashValue
-			int hashValue = this.hashFunction(hashPair.getKey());
+		// Pick out the buckets one by one
+		LL* old_bucket = AL_get(table->buckets, j);
 
-			// Isolate the new bucket in question
-			LinkedList<HashPair<K,V>> newBucket = newBuckets.get(hashValue);
+		// Run through the bucket nodes
+		ND* node = bucket->head;
+		while (node != NULL) {
 
-			// Add the hashPair to the new buckets
-			newBucket.add(hashPair);
+			// Extract the hash pair
+			HP* pair = node->element;
+
+			// Retrieve hash_value
+			AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
+
+			// Isolate the bucket in question
+			LL* new_bucket = AL_get(new_buckets, hash_value);
+
+			// Add the hash_pair to the new bucket
+			LL_add(new_bucket, pair);
+
+			node = node->next;
 		}
+	}
+
+	// Free the buckets
+	for (AL_STYPE j = 0; j < table->num_buckets / 2; j++)
+		free_LL(AL_get(table->buckets, j));
+
+	// Free the array list
+	free_AL(table->buckets);
 
 	// Update the buckets
-	this.buckets = newBuckets;
-
+	table->buckets = new_buckets;
+	return;
 }
 
+// Generate an array with all the keys in the table
 KEY_DTYPE* HT_keys(HT* table) {
 
+	return NULL;
+
+	/*
 	// Create the return array list
 	ArrayList<K> keys = new ArrayList<>(this.numEntries);
 
@@ -224,11 +247,15 @@ KEY_DTYPE* HT_keys(HT* table) {
 			keys.add(hashPair.getKey());
 
 	return keys;
-
+	*/
 }
 
+// Generate an array with all the values in the table
 VAL_DTYPE* HT_values(HT* table) {
 
+	return NULL;
+
+	/*
 	// Keep track of existing values
 	MyHashTable<V, Boolean> duplicateChecker = new MyHashTable<>(this.numEntries);
 
@@ -247,5 +274,5 @@ VAL_DTYPE* HT_values(HT* table) {
 				values.add(value);
 		}
 	return values;
-
+	*/
 }
