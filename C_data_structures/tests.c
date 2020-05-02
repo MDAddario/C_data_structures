@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "hash_table.h"
 
+/*
 void assert_AL_STYPE(AL_STYPE a, AL_STYPE b, char* title) {
 
 	if (!(a == b)) {
@@ -55,11 +56,12 @@ void assert_NULL(ND* node, char* title) {
 	}
 	return;
 }
+*/
 
 int main() {
 
 /*****************************************************************/
-
+	/*
 	// Conduct array list unit tests
 	printf("===== CONDUCTING ARRAY LIST UNIT TESTS =====\n");
 
@@ -263,11 +265,11 @@ int main() {
 
 	// Completes array list unit tests
 	printf("===== COMPLETED ARRAY LIST UNIT TESTS =====\n");
-
+	*/
 /*****************************************************************/
 
 /*****************************************************************/
-
+	/*
 	// Conduct linked list unit tests
 	printf("===== CONDUCTING LINKED LIST UNIT TESTS =====\n");
 
@@ -460,150 +462,153 @@ int main() {
 	// Completes linked list unit tests
 	printf("===== COMPLETED LINKED LIST UNIT TESTS =====\n");
 
+	*/
 /*****************************************************************/
 
 	// Conduct hash table unit tests
 	printf("===== CONDUCTING HASH TABLE UNIT TESTS =====\n");
 
 	// Create a hash table
-	MyHashTable<String, Integer> hashTable = new MyHashTable<>(5);
+	HT* table = new_HT(5);
 
-	if (hashTable.size() != 0)
-		throw new RuntimeException("Error 1");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 2");
+	if (table->num_entries != 0)
+		printf("Error 1");
+	if (table->num_buckets != 5)
+		printf("Error 2");
 
 	// Random value pairs
-	String[] myKeys = {"one", "two", "three", "four", "five"};
-	int[] myValues = {1, 2, 3, 4, 5};
+	char* my_keys[] = {"one", "two", "three", "four", "five"};
+	int my_values[] = {1, 2, 3, 4, 5};
 
 	// put()
 	for (int i = 0; i < 3; i++)
-		if (hashTable.put(myKeys[i], myValues[i]) != null)
-			throw new RuntimeException("Error 3");
+		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
+			printf("Error 3");
 
-	if (hashTable.size() != 3)
-		throw new RuntimeException("Error 4");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 5");
+	if (table->num_entries != 3)
+		printf("Error 4");
+	if (table->num_buckets != 5)
+		printf("Error 5");
 
-	if (hashTable.put("one", 404) != 1)
-		throw new RuntimeException("Error 6");
-	if (hashTable.put("one", 1) != 404)
-		throw new RuntimeException("Error 7");
+	if (HT_put(table, "one", 404) != 1)
+		printf("Error 6");
+	if (HT_put(table, "one", 1) != 404)
+		printf("Error 7");
 
-	if (hashTable.size() != 3)
-		throw new RuntimeException("Error 8");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 9");
+	if (table->num_entries != 3)
+		printf("Error 8");
+	if (table->num_buckets != 5)
+		printf("Error 9");
 
 	// get()
 	for (int i = 0; i < 3; i++)
-		if (hashTable.get(myKeys[i]) != i + 1)
-			throw new RuntimeException("Error 10");
+		if (HT_get(table, my_keys[i]) != i + 1)
+			printf("Error 10");
 	for (int i = 3; i < 5; i++)
-		if (hashTable.get(myKeys[i]) != null)
-			throw new RuntimeException("Error 11");
+		if (HT_get(table, my_keys[i]) != VAL_DTYPE_NULL)
+			printf("Error 11");
 
-	if (hashTable.size() != 3)
-		throw new RuntimeException("Error 12");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 13");
+	if (table->num_entries != 3)
+		printf("Error 12");
+	if (table->num_buckets != 5)
+		printf("Error 13");
 
 	// remove()
 	for (int i = 3; i < 5; i++)
-		if (hashTable.remove(myKeys[i]) != null)
-			throw new RuntimeException("Error 14");
+		if (HT_remove(table, my_keys[i]) != VAL_DTYPE_NULL)
+			printf("Error 14");
 
-	if (hashTable.size() != 3)
-		throw new RuntimeException("Error 15");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 16");
+	if (table->num_entries != 3)
+		printf("Error 15");
+	if (table->num_buckets != 5)
+		printf("Error 16");
 
 	for (int i = 0; i < 3; i++)
-		if (hashTable.remove(myKeys[i]) != i + 1)
-			throw new RuntimeException("Error 17");
+		if (HT_remove(table, my_keys[i]) != i + 1)
+			printf("Error 17");
 
-	if (hashTable.size() != 0)
-		throw new RuntimeException("Error 18");
-	if (hashTable.numBuckets() != 5)
-		throw new RuntimeException("Error 19");
+	if (table->num_entries != 0)
+		printf("Error 18");
+	if (table->num_buckets != 5)
+		printf("Error 19");
 
 	// rehash()
 	for (int i = 0; i < 4; i++)
-		if (hashTable.put(myKeys[i], myValues[i]) != null)
-			throw new RuntimeException("Error 20");
+		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
+			printf("Error 20");
 
-	if (hashTable.size() != 4)
-		throw new RuntimeException("Error 21");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 22");
+	if (table->num_entries != 4)
+		printf("Error 21");
+	if (table->num_buckets != 10)
+		printf("Error 22");
 
 	for (int i = 0; i < 4; i++)
-		if (hashTable.put(myKeys[i], myValues[i]) != i + 1)
-			throw new RuntimeException("Error 22.5");
+		if (HT_put(table, my_keys[i], my_values[i]) != i + 1)
+			printf("Error 22.5");
 	for (int i = 0; i < 4; i++)
-		if (hashTable.get(myKeys[i]) != i + 1)
-			throw new RuntimeException("Error 23");
+		if (HT_get(table, my_keys[i]) != i + 1)
+			printf("Error 23");
 	for (int i = 4; i < 5; i++)
-		if (hashTable.get(myKeys[i]) != null)
-			throw new RuntimeException("Error 24");
+		if (HT_get(table, my_keys[i]) != VAL_DTYPE_NULL)
+			printf("Error 24");
 
-	if (hashTable.size() != 4)
-		throw new RuntimeException("Error 25");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 26");
+	if (table->num_entries != 4)
+		printf("Error 25");
+	if (table->num_buckets != 10)
+		printf("Error 26");
 
 	for (int i = 0; i < 4; i++)
-		if (hashTable.remove(myKeys[i]) != i + 1)
-			throw new RuntimeException("Error 27");
+		if (HT_remove(table, my_keys[i]) != i + 1)
+			printf("Error 27");
 
-	if (hashTable.size() != 0)
-		throw new RuntimeException("Error 28");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 29");
+	if (table->num_entries != 0)
+		printf("Error 28");
+	if (table->num_buckets != 10)
+		printf("Error 29");
 
 	for (int i = 0; i < 5; i++)
-		if (hashTable.put(myKeys[i], myValues[i]) != null)
-			throw new RuntimeException("Error 30");
+		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
+			printf("Error 30");
 
-	if (hashTable.size() != 5)
-		throw new RuntimeException("Error 31");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 32");
+	if (table->num_entries != 5)
+		printf("Error 31");
+	if (table->num_buckets != 10)
+		printf("Error 32");
 
+	/*
 	// keys()
-	ArrayList<String> keys = hashTable.keys();
+	ArrayList<String> keys = table.keys();
 	if (keys.size() != 5)
-		throw new RuntimeException("Error 33");
+		printf("Error 33");
 	for (int i = 0; i < 5; i++)
-		if (!keys.contains(myKeys[i]))
-			throw new RuntimeException("Error 34");
+		if (!keys.contains(my_keys[i]))
+			printf("Error 34");
 
 	// values()
-	if (hashTable.put("duplicate", 3) != null)
-		throw new RuntimeException("Error 34.3");
-	if (hashTable.size() != 6)
-		throw new RuntimeException("Error 34.5");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 34.8");
+	if (HT_put(table, "duplicate", 3) != NULL)
+		printf("Error 34.3");
+	if (table->num_entries != 6)
+		printf("Error 34.5");
+	if (table->num_buckets != 10)
+		printf("Error 34.8");
 
-	ArrayList<Integer> values = hashTable.values();
+	ArrayList<Integer> values = table.values();
 	if (values.size() != 5)
-		throw new RuntimeException("Error 35");
+		printf("Error 35");
 	for (int i = 0; i < 5; i++)
-		if (!values.contains(myValues[i]))
-			throw new RuntimeException("Error 36");
+		if (!values.contains(my_values[i]))
+			printf("Error 36");
 
-	if (hashTable.remove("duplicate") != 3)
-		throw new RuntimeException("Error 36.3");
-	if (hashTable.size() != 5)
-		throw new RuntimeException("Error 36.5");
-	if (hashTable.numBuckets() != 10)
-		throw new RuntimeException("Error 36.8");
+	if (HT_remove(table, "duplicate") != 3)
+		printf("Error 36.3");
+	if (table->num_entries != 5)
+		printf("Error 36.5");
+	if (table->num_buckets != 10)
+		printf("Error 36.8");
 
 	// Completes hash table unit tests
 	printf("===== COMPLETED HASH TABLE UNIT TESTS =====\n");
+	*/
 
 /*****************************************************************/
 
