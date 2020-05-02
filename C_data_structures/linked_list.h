@@ -15,9 +15,9 @@ typedef struct struct_ND {
 // Struct for linked list
 typedef struct struct_LL {
 
-	ND*      head;  // Head of linked list
-	ND*      tail;  // Tail of linked list
-	STYPE    size;  // Number of elements
+	ND*    head;  // Head of linked list
+	ND*    tail;  // Tail of linked list
+	STYPE  size;  // Number of elements
 
 } LL;
 

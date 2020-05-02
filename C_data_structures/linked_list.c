@@ -337,18 +337,3 @@ BOOL LL_equals(LL* a, LL* b) {
 	}
 	return TRUE;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

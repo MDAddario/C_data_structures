@@ -3,7 +3,7 @@
 #include "array_list.h"
 
 // Constructor
-AL* new_AL(AL_STYPE capacity) {
+AL* new_AL(STYPE capacity) {
 
 	// Allocate the memory for an array list
 	AL* list = (AL*)malloc(sizeof(AL));
@@ -15,7 +15,7 @@ AL* new_AL(AL_STYPE capacity) {
 		list->capacity = capacity;
 
 	// Create the hidden array
-	list->array = (AL_DTYPE*)malloc(list->capacity * sizeof(AL_DTYPE));
+	list->array = (AL_DTYPE**)malloc(list->capacity * sizeof(AL_DTYPE*));
 
 	// Start with zero elements
 	list->size = 0;
@@ -23,7 +23,10 @@ AL* new_AL(AL_STYPE capacity) {
 }
 
 // Destructor
-void free_AL(AL* list) {
+void AL_free(AL* list) {
+
+	// Free all of the objects
+	AL_clear(list);
 
 	// Free the underlying array
 	free(list->array);
@@ -34,7 +37,7 @@ void free_AL(AL* list) {
 }
 
 // Add element to the array list at given position
-BOOL AL_add_at(AL* list, AL_DTYPE value, AL_STYPE index) {
+BOOL AL_add_at(AL* list, AL_DTYPE* value, STYPE index) {
 
 	// Make sure index makes sense
 	if (index > list->size || index < 0) {
@@ -45,11 +48,11 @@ BOOL AL_add_at(AL* list, AL_DTYPE value, AL_STYPE index) {
 	// Expand array if needed
 	if (list->size == list->capacity) {
 		list->capacity *= 2;
-		list->array = (AL_DTYPE*)realloc(list->array, list->capacity * sizeof(AL_DTYPE));
+		list->array = (AL_DTYPE**)realloc(list->array, list->capacity * sizeof(AL_DTYPE*));
 	}
 
 	// Displace all elements that are after the index
-	for (AL_STYPE j = list->size - 1; j >= index; j--)
+	for (STYPE j = list->size - 1; j >= index; j--)
 		list->array[j + 1] = list->array[j];
 
 	// Add the value
@@ -59,7 +62,7 @@ BOOL AL_add_at(AL* list, AL_DTYPE value, AL_STYPE index) {
 }
 
 // Add element to the start of the array list
-void AL_add_start(AL* list, AL_DTYPE value) {
+void AL_add_start(AL* list, AL_DTYPE* value) {
 
 	// Add to position zero
 	AL_add_at(list, value, 0);
@@ -67,7 +70,7 @@ void AL_add_start(AL* list, AL_DTYPE value) {
 }
 
 // Add element to the end of the array list
-void AL_add_end(AL* list, AL_DTYPE value) {
+void AL_add_end(AL* list, AL_DTYPE* value) {
 
 	// Add to last position
 	AL_add_at(list, value, list->size);
@@ -77,16 +80,20 @@ void AL_add_end(AL* list, AL_DTYPE value) {
 // Clear the list
 void AL_clear(AL* list) {
 
+	// Free all of the objects
+	for (STYPE j = 0; j < list->size; j++)
+		AL_DTYPE_FREE(list->array[j]);
+
 	// Set size to zero
 	list->size = 0;
 	return;
 }
 
 // Check if the list contains a value
-BOOL AL_contains(AL* list, AL_DTYPE value) {
+BOOL AL_contains(AL* list, AL_DTYPE* value) {
 
 	// Find index value
-	AL_STYPE index = AL_index_of(list, value);
+	STYPE index = AL_index_of(list, value);
 
 	// Value not in list
 	if (index == INDEX_NOT_FOUND)
@@ -97,12 +104,12 @@ BOOL AL_contains(AL* list, AL_DTYPE value) {
 }
 
 // Return an element from the list
-AL_DTYPE AL_get(AL* list, AL_STYPE index) {
+AL_DTYPE* AL_get(AL* list, STYPE index) {
 
 	// Make sure index makes sense
 	if (index >= list->size || index < 0) {
 		printf("Index specified for AL_get() is rubbish.\n");
-		return AL_DTYPE_NULL;
+		return NULL;
 	}
 
 	// Retrieve element from array
@@ -110,11 +117,11 @@ AL_DTYPE AL_get(AL* list, AL_STYPE index) {
 }
 
 // Return the index corresponding to a value
-AL_STYPE AL_index_of(AL* list, AL_DTYPE value) {
+STYPE AL_index_of(AL* list, AL_DTYPE* value) {
 
 	// Scan the array
-	for (AL_STYPE j = 0; j < list->size; j++)
-		if (AL_DTYPE_EQUALS((void*)&(list->array[j]), (void*)&(value)))
+	for (STYPE j = 0; j < list->size; j++)
+		if (AL_DTYPE_EQUALS(list->array[j], value))
 			return j;
 	return INDEX_NOT_FOUND;
 }
@@ -126,7 +133,7 @@ BOOL AL_is_empty(AL* list) {
 }
 
 // Remove element at given index
-BOOL AL_remove_at(AL* list, AL_STYPE index) {
+BOOL AL_remove_at(AL* list, STYPE index) {
 
 	// Ensure there is a value to remove
 	if (AL_is_empty(list)) {
@@ -141,7 +148,7 @@ BOOL AL_remove_at(AL* list, AL_STYPE index) {
 	}
 
 	// Shift all the elements back
-	for (AL_STYPE j = index; j < list->size; j++)
+	for (STYPE j = index; j < list->size; j++)
 		list->array[j] = list->array[j + 1];
 
 	// Reduce the size
@@ -162,10 +169,10 @@ BOOL AL_remove_end(AL* list) {
 }
 
 // Remove a given value from list
-BOOL AL_remove_value(AL* list, AL_DTYPE value) {
+BOOL AL_remove_value(AL* list, AL_DTYPE* value) {
 
 	// Find index value
-	AL_STYPE index = AL_index_of(list, value);
+	STYPE index = AL_index_of(list, value);
 
 	// Value not in list
 	if (index == INDEX_NOT_FOUND)
@@ -176,6 +183,21 @@ BOOL AL_remove_value(AL* list, AL_DTYPE value) {
 }
 
 // Determine the size of the list
-AL_STYPE AL_size(AL* list) {
+STYPE AL_size(AL* list) {
 	return list->size;
+}
+
+// Comparison operator
+BOOL AL_equals(AL* a, AL* b) {
+
+	// Compare lengths
+	if (AL_size(a) != AL_size(b))
+		return FALSE;
+
+	// Run through the arrays
+	for (STYPE j = 0; j < a->size; j++)
+		if (!AL_DTYPE_EQUALS(a->array[j], b->array[j]))
+			return FALSE;
+
+	return TRUE;
 }
