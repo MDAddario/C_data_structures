@@ -1,11 +1,9 @@
-#include "define.h"
 #include "linked_list.h"
-#include "hash_table.h"
-#define AL_DTYPE        LL*        // Data type of objects to store
-#define AL_DTYPE_NULL   NULL       // NULL definition corresponding to AL_DTYPE
-#define AL_DTYPE_EQUALS LL_equals  // Function used to compare AL_DTYPE values
-#define AL_STYPE        long       // Data type of size of the underlying array
-#define AL_DEFAULT_CAP  10         // Default capacity for array lists
+#define AL_DTYPE        LL*             // Data type of objects to store
+#define AL_DTYPE_NULL   NULL            // NULL definition corresponding to AL_DTYPE
+#define AL_DTYPE_EQUALS LL_equals       // Function used to compare AL_DTYPE values
+#define AL_STYPE        long            // Data type of size of the underlying array
+#define AL_DEFAULT_CAP  10              // Default capacity for array lists
 
 // Struct for the array list
 typedef struct struct_AL {

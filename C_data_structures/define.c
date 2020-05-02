@@ -21,8 +21,3 @@ BOOL double_equals(const void * a, const void * b) {
 BOOL string_equals(const void * a, const void * b) {
 	return !strcmp((char*)a, (char*)b);
 }
-
-AL_STYPE string_hash (char* string, AS_TYPE num_buckets) {
-
-	return Math.abs(key.hashCode())%this.numBuckets;
-}

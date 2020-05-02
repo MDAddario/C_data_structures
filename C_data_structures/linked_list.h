@@ -1,10 +1,9 @@
 #include "define.h"
-#include "array_list.h"
-#include "hash_table.h"
-#define LL_DTYPE        HP*        // Data type of objects to store
-#define LL_DTYPE_NULL   NULL       // NULL definition corresponding to DTYPE
-#define LL_DTYPE_EQUALS HP_equals  // Function used to compare LL_DTYPE values
-#define LL_STYPE        long       // Data type of size of linked list
+#include "hash_pair.h"
+#define LL_DTYPE        HP*             // Data type of objects to store
+#define LL_DTYPE_NULL   NULL            // NULL definition corresponding to DTYPE
+#define LL_DTYPE_EQUALS HP_equals       // Function used to compare LL_DTYPE values
+#define LL_STYPE        long            // Data type of size of linked list
 
 // Struct for the nodes
 typedef struct struct_ND {
