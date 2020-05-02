@@ -22,7 +22,6 @@ void HP_free(HP* pair) {
 
 	// Free the hash pair
 	free(pair);
-	return;
 }
 
 // Comparison operator
