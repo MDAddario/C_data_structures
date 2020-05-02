@@ -462,6 +462,145 @@ int main() {
 	printf("===== COMPLETED LINKED LIST UNIT TESTS =====\n");
 
 /*****************************************************************/
+
+
+        // Create a hash table
+        MyHashTable<String, Integer> hashTable = new MyHashTable<>(5);
+
+        if (hashTable.size() != 0)
+            throw new RuntimeException("Error 1");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 2");
+
+        // Random value pairs
+        String[] myKeys = {"one", "two", "three", "four", "five"};
+        int[] myValues = {1, 2, 3, 4, 5};
+
+        // put()
+        for (int i = 0; i < 3; i++)
+            if (hashTable.put(myKeys[i], myValues[i]) != null)
+                throw new RuntimeException("Error 3");
+
+        if (hashTable.size() != 3)
+            throw new RuntimeException("Error 4");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 5");
+
+        if (hashTable.put("one", 404) != 1)
+            throw new RuntimeException("Error 6");
+        if (hashTable.put("one", 1) != 404)
+            throw new RuntimeException("Error 7");
+
+        if (hashTable.size() != 3)
+            throw new RuntimeException("Error 8");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 9");
+
+        // get()
+        for (int i = 0; i < 3; i++)
+            if (hashTable.get(myKeys[i]) != i + 1)
+                throw new RuntimeException("Error 10");
+        for (int i = 3; i < 5; i++)
+            if (hashTable.get(myKeys[i]) != null)
+                throw new RuntimeException("Error 11");
+
+        if (hashTable.size() != 3)
+            throw new RuntimeException("Error 12");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 13");
+
+        // remove()
+        for (int i = 3; i < 5; i++)
+            if (hashTable.remove(myKeys[i]) != null)
+                throw new RuntimeException("Error 14");
+
+        if (hashTable.size() != 3)
+            throw new RuntimeException("Error 15");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 16");
+
+        for (int i = 0; i < 3; i++)
+            if (hashTable.remove(myKeys[i]) != i + 1)
+                throw new RuntimeException("Error 17");
+
+        if (hashTable.size() != 0)
+            throw new RuntimeException("Error 18");
+        if (hashTable.numBuckets() != 5)
+            throw new RuntimeException("Error 19");
+
+        // rehash()
+        for (int i = 0; i < 4; i++)
+            if (hashTable.put(myKeys[i], myValues[i]) != null)
+                throw new RuntimeException("Error 20");
+
+        if (hashTable.size() != 4)
+            throw new RuntimeException("Error 21");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 22");
+
+        for (int i = 0; i < 4; i++)
+            if (hashTable.put(myKeys[i], myValues[i]) != i + 1)
+                throw new RuntimeException("Error 22.5");
+        for (int i = 0; i < 4; i++)
+            if (hashTable.get(myKeys[i]) != i + 1)
+                throw new RuntimeException("Error 23");
+        for (int i = 4; i < 5; i++)
+            if (hashTable.get(myKeys[i]) != null)
+                throw new RuntimeException("Error 24");
+
+        if (hashTable.size() != 4)
+            throw new RuntimeException("Error 25");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 26");
+
+        for (int i = 0; i < 4; i++)
+            if (hashTable.remove(myKeys[i]) != i + 1)
+                throw new RuntimeException("Error 27");
+
+        if (hashTable.size() != 0)
+            throw new RuntimeException("Error 28");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 29");
+
+        for (int i = 0; i < 5; i++)
+            if (hashTable.put(myKeys[i], myValues[i]) != null)
+                throw new RuntimeException("Error 30");
+
+        if (hashTable.size() != 5)
+            throw new RuntimeException("Error 31");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 32");
+
+        // keys()
+        ArrayList<String> keys = hashTable.keys();
+        if (keys.size() != 5)
+            throw new RuntimeException("Error 33");
+        for (int i = 0; i < 5; i++)
+            if (!keys.contains(myKeys[i]))
+                throw new RuntimeException("Error 34");
+
+        // values()
+        if (hashTable.put("duplicate", 3) != null)
+            throw new RuntimeException("Error 34.3");
+        if (hashTable.size() != 6)
+            throw new RuntimeException("Error 34.5");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 34.8");
+
+        ArrayList<Integer> values = hashTable.values();
+        if (values.size() != 5)
+            throw new RuntimeException("Error 35");
+        for (int i = 0; i < 5; i++)
+            if (!values.contains(myValues[i]))
+                throw new RuntimeException("Error 36");
+
+        if (hashTable.remove("duplicate") != 3)
+            throw new RuntimeException("Error 36.3");
+        if (hashTable.size() != 5)
+            throw new RuntimeException("Error 36.5");
+        if (hashTable.numBuckets() != 10)
+            throw new RuntimeException("Error 36.8");
+
 /*****************************************************************/
 
 	// All tests pass

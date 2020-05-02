@@ -1,4 +1,3 @@
-#include "define.h"
 #include "array_list.h"
 #include "linked_list.h"
 #define KEY_DTYPE        char*          // Data type of keys

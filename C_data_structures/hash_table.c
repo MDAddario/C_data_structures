@@ -1,181 +1,220 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array_list.h"
+#include "hash_table.h"
 
 // Constructor
 AL* new_AL(AL_STYPE capacity) {
-
-	// Allocate the memory for an array list
-	AL* list = (AL*)malloc(sizeof(AL));
-
-	// Format the capacity
-	if (capacity < 1)
-		list->capacity = AL_DEFAULT_CAP;
-	else
-		list->capacity = capacity;
-
-	// Create the hidden array
-	list->array = (AL_DTYPE*)malloc(list->capacity * sizeof(AL_DTYPE));
-
-	// Start with zero elements
-	list->size = 0;
-	return list;
 }
 
 // Destructor
-void free_AL(AL* list) {
-
-	// Free the underlying array
-	free(list->array);
-
-	// Free the array list
-	free(list);
+void free_HP(AL* list) {
 	return;
 }
 
-// Add element to the array list at given position
-BOOL AL_add_at(AL* list, AL_DTYPE value, AL_STYPE index) {
+    public MyHashTable(int initialCapacity) {
 
-	// Make sure index makes sense
-	if (index > list->size || index < 0) {
-		printf("Index specified for AL_add_at() is rubbish.\n");
-		return FALSE;
-	}
+        // Initialize fields
+        this.numEntries = 0;
+        this.numBuckets = initialCapacity;
 
-	// Expand array if needed
-	if (list->size == list->capacity) {
-		list->capacity *= 2;
-		list->array = (AL_DTYPE*)realloc(list->array, list->capacity * sizeof(AL_DTYPE));
-	}
+        // Take care of an annoying case
+        if (this.numBuckets <= 0)
+            this.numBuckets = 10;
 
-	// Displace all elements that are after the index
-	for (AL_STYPE j = list->size - 1; j >= index; j--)
-		list->array[j + 1] = list->array[j];
+        this.buckets = new ArrayList<>(this.numBuckets);
 
-	// Add the value
-	list->array[index] = value;
-	list->size++;
-	return TRUE;
-}
+        // Construct the buckets
+        for (int i = 0; i < this.numBuckets; i++)
+            this.buckets.add(new LinkedList<>());
+    }
+    
+    public int size() {
+        return this.numEntries;
+    }
+    
+    public boolean isEmpty() {
+        return this.numEntries == 0;
+    }
+    
+    public int numBuckets() {
+        return this.numBuckets;
+    }
+    
+    /**
+     * Returns the buckets variable. Useful for testing  purposes.
+     */
+    public ArrayList<LinkedList< HashPair<K,V> > > getBuckets(){
+        return this.buckets;
+    }
+    
+    /**
+     * Given a key, return the bucket position for the key. 
+     */
+    public int hashFunction(K key) {
+        int hashValue = Math.abs(key.hashCode())%this.numBuckets;
+        return hashValue;
+    }
+    
+    /**
+     * Takes a key and a value as input and adds the corresponding HashPair
+     * to this HashTable. Expected average run time  O(1)
+     */
+    public V put(K key, V value) {
 
-// Add element to the start of the array list
-void AL_add_start(AL* list, AL_DTYPE value) {
+        // Retrieve hashValue
+        int hashValue = this.hashFunction(key);
 
-	// Add to position zero
-	AL_add_at(list, value, 0);
-	return;
-}
+        // Isolate the bucket in question
+        LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
 
-// Add element to the end of the array list
-void AL_add_end(AL* list, AL_DTYPE value) {
+        // Check if key already exists
+        for (HashPair<K,V> hashPair: bucket) {
+            if (hashPair.getKey().equals(key)) {
 
-	// Add to last position
-	AL_add_at(list, value, list->size);
-	return;
-}
+                // Update value and return old value
+                V oldValue = hashPair.getValue();
+                hashPair.setValue(value);
+                return oldValue;
+            }
+        }
 
-// Clear the list
-void AL_clear(AL* list) {
+        // Add hashPair to bucket
+        bucket.add(new HashPair<>(key, value));
+        this.numEntries += 1;
 
-	// Set size to zero
-	list->size = 0;
-	return;
-}
+        // Consider rehashing
+        if (((double) this.numEntries) / this.numBuckets > MAX_LOAD_FACTOR)
+            this.rehash();
 
-// Check if the list contains a value
-BOOL AL_contains(AL* list, AL_DTYPE value) {
+        return null;
+    }
+    
+    
+    /**
+     * Get the value corresponding to key. Expected average runtime O(1)
+     */
+    
+    public V get(K key) {
 
-	// Find index value
-	AL_STYPE index = AL_index_of(list, value);
+        // Retrieve hashValue
+        int hashValue = this.hashFunction(key);
 
-	// Value not in list
-	if (index == INDEX_NOT_FOUND)
-		return FALSE;
+        // Isolate the bucket in question
+        LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
 
-	// Value in list
-	return TRUE;
-}
+        // Check if key already exists
+        for (HashPair<K,V> hashPair: bucket) {
+            if (hashPair.getKey().equals(key)) {
 
-// Return an element from the list
-AL_DTYPE AL_get(AL* list, AL_STYPE index) {
+                return hashPair.getValue();
+            }
+        }
+        // Key doesn't exist
+        return null;
+    }
+    
+    /**
+     * Remove the HashPair corresponding to key . Expected average runtime O(1) 
+     */
+    public V remove(K key) {
 
-	// Make sure index makes sense
-	if (index >= list->size || index < 0) {
-		printf("Index specified for AL_get() is rubbish.\n");
-		return AL_DTYPE_NULL;
-	}
+        // Retrieve hashValue
+        int hashValue = this.hashFunction(key);
 
-	// Retrieve element from array
-	return list->array[index];
-}
+        // Isolate the bucket in question
+        LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
 
-// Return the index corresponding to a value
-AL_STYPE AL_index_of(AL* list, AL_DTYPE value) {
+        // Check if key already exists
+        for (HashPair<K,V> hashPair: bucket) {
+            if (hashPair.getKey().equals(key)) {
 
-	// Scan the array
-	for (AL_STYPE j = 0; j < list->size; j++)
-		if (AL_DTYPE_EQUALS((void*)&(list->array[j]), (void*)&(value)))
-			return j;
-	return INDEX_NOT_FOUND;
-}
+                // Delete hashPair and return value
+                V value = hashPair.getValue();
+                bucket.remove(hashPair);
+                this.numEntries -= 1;
+                return value;
+            }
+        }
+        // Key doesn't exist
+        return null;
+    }
+    
+    
+    /** 
+     * Method to double the size of the hashtable if load factor increases
+     * beyond MAX_LOAD_FACTOR.
+     * Made public for ease of testing.
+     * Expected average runtime is O(m), where m is the number of buckets
+     */
+    public void rehash() {
 
-// Determine if array is empty
-BOOL AL_is_empty(AL* list) {
+        // Double capacity
+        this.numBuckets *= 2;
 
-	return !AL_size(list);
-}
+        // Construct the new buckets
+        ArrayList<LinkedList<HashPair<K,V>>> newBuckets = new ArrayList<>(this.numBuckets);
+        for (int i = 0; i < this.numBuckets; i++)
+            newBuckets.add(new LinkedList<>());
 
-// Remove element at given index
-BOOL AL_remove_at(AL* list, AL_STYPE index) {
+        // Migrate all the old hashPairs
+        for (LinkedList<HashPair<K,V>> oldBucket: this.buckets)
+            for (HashPair<K,V> hashPair: oldBucket) {
 
-	// Ensure there is a value to remove
-	if (AL_is_empty(list)) {
-		printf("Cannot remove elements from an empty list.\n");
-		return FALSE;
-	}
+                // Retrieve hashValue
+                int hashValue = this.hashFunction(hashPair.getKey());
 
-	// Make sure index makes sense
-	if (index >= list->size || index < 0) {
-		printf("Index specified for AL_remove_at() is rubbish.\n");
-		return FALSE;
-	}
+                // Isolate the new bucket in question
+                LinkedList<HashPair<K,V>> newBucket = newBuckets.get(hashValue);
 
-	// Shift all the elements back
-	for (AL_STYPE j = index; j < list->size; j++)
-		list->array[j] = list->array[j + 1];
+                // Add the hashPair to the new buckets
+                newBucket.add(hashPair);
+            }
 
-	// Reduce the size
-	list->size--;
-	return TRUE;
-}
+        // Update the buckets
+        this.buckets = newBuckets;
+    }
+    
+    
+    /**
+     * Return a list of all the keys present in this hashtable.
+     * Expected average runtime is O(m), where m is the number of buckets
+     */
+    
+    public ArrayList<K> keys() {
 
-// Remove first value
-BOOL AL_remove_start(AL* list) {
+        // Create the return array list
+        ArrayList<K> keys = new ArrayList<>(this.numEntries);
 
-	return AL_remove_at(list, 0);
-}
+        // Run through all the hashPairs
+        for (LinkedList<HashPair<K,V>> bucket: this.buckets)
+            for (HashPair<K,V> hashPair: bucket)
+                keys.add(hashPair.getKey());
 
-// Remove last value
-BOOL AL_remove_end(AL* list) {
+    	return keys;
+    }
+    
+    /**
+     * Returns an ArrayList of unique values present in this hashtable.
+     * Expected average runtime is O(m) where m is the number of buckets
+     */
+    public ArrayList<V> values() {
 
-	return AL_remove_at(list, list->size - 1);
-}
+        // Keep track of existing values
+        MyHashTable<V, Boolean> duplicateChecker = new MyHashTable<>(this.numEntries);
 
-// Remove a given value from list
-BOOL AL_remove_value(AL* list, AL_DTYPE value) {
+        // Create the return array list
+        ArrayList<V> values = new ArrayList<>(this.numEntries);
 
-	// Find index value
-	AL_STYPE index = AL_index_of(list, value);
+        // Run through all the hashPairs
+        for (LinkedList<HashPair<K,V>> bucket: this.buckets)
+            for (HashPair<K,V> hashPair: bucket) {
 
-	// Value not in list
-	if (index == INDEX_NOT_FOUND)
-		return FALSE;
+                // Get the value
+                V value = hashPair.getValue();
 
-	// Value in list
-	return AL_remove_at(list, index);
-}
-
-// Determine the size of the list
-AL_STYPE AL_size(AL* list) {
-	return list->size;
-}
+                // Add unique copy to array list
+                if (duplicateChecker.put(value, true) == null)
+                    values.add(value);
+            }
+        return values;
+    }
