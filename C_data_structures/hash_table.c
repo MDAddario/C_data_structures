@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hash_table.h"
 
 // Hash functions
 STYPE string_hash(String* wrapper, STYPE num_buckets) {
-	return 0;
-	//return Math.abs(key.hashCode())%this.numBuckets;
+
+	// Use the java hashcode
+	STYPE size = strlen(wrapper->entry);
+	STYPE hash_code = 0;
+
+	for (STYPE j = 0; j < size; j++)
+		hash_code = 31 * hash_code + wrapper->entry[j];
+
+	return hash_code % num_buckets;
 }
 
 // Constructor
@@ -194,44 +202,57 @@ void HT_rehash(HT* table) {
 // Generate an array with all the keys in the table
 KEY_DTYPE** HT_keys(HT* table) {
 
-	return NULL;
+	// Create the return array
+	KEY_DTYPE** keys = (KEY_DTYPE**)malloc(table->num_entries * sizeof(KEY_DTYPE*));
+	STYPE size = 0;
 
-	/*
-	// Create the return array list
-	ArrayList<K> keys = new ArrayList<>(this.numEntries);
+	// Run through all the hash pairs
+	for (STYPE j = 0; j < table->num_buckets; j++) {
 
-	// Run through all the hashPairs
-	for (LinkedList<HashPair<K,V>> bucket: this.buckets)
-		for (HashPair<K,V> hashPair: bucket)
-			keys.add(hashPair.getKey());
+		// Pick the buckets
+		LL* bucket = AL_get(table->buckets, j);
 
+		// Run through the bucket
+		ND* node = bucket->head;
+		while (node != NULL) {
+
+			// Extract the hash pair
+			HP* pair = node->element;
+
+			// Add the key to the array
+			keys[size++] = pair->key;
+
+			node = node->next;
+		}
+	}
 	return keys;
-	*/
 }
 
 // Generate an array with all the values in the table
 VAL_DTYPE** HT_values(HT* table) {
 
-	return NULL;
+	// Create the return array
+	VAL_DTYPE** values = (VAL_DTYPE**)malloc(table->num_entries * sizeof(VAL_DTYPE*));
+	STYPE size = 0;
 
-	/*
-	// Keep track of existing values
-	MyHashTable<V, Boolean> duplicateChecker = new MyHashTable<>(this.numEntries);
+	// Run through all the hash pairs
+	for (STYPE j = 0; j < table->num_buckets; j++) {
 
-	// Create the return array list
-	ArrayList<V> values = new ArrayList<>(this.numEntries);
+		// Pick the buckets
+		LL* bucket = AL_get(table->buckets, j);
 
-	// Run through all the hashPairs
-	for (LinkedList<HashPair<K,V>> bucket: this.buckets)
-		for (HashPair<K,V> hashPair: bucket) {
+		// Run through the bucket
+		ND* node = bucket->head;
+		while (node != NULL) {
 
-			// Get the value
-			V value = hashPair.getValue();
+			// Extract the hash pair
+			HP* pair = node->element;
 
-			// Add unique copy to array list
-			if (duplicateChecker.put(value, true) == null)
-				values.add(value);
+			// Add the key to the array
+			values[size++] = pair->value;
+
+			node = node->next;
 		}
+	}
 	return values;
-	*/
 }

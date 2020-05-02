@@ -32,7 +32,7 @@ String* new_string(char* entry) {
 	String* wrapper = (String*)malloc(sizeof(String));
 
 	// Copy the field entry
-	long size = strlen(entry) + 1l; // Include the null character ofc
+	STYPE size = strlen(entry) + 1l; // Include the null character ofc
 	wrapper->entry = (char*)malloc(size * sizeof(char));
 	strcpy(wrapper->entry, entry);
 
