@@ -71,91 +71,119 @@ void free_HT(HT* table) {
 
 	// Free the buckets
 	for (AL_STYPE j = 0; j < table->num_buckets; j++)
-		free(AL_get(table->buckets, j));
+		free_LL(AL_get(table->buckets, j));
 
 	// Free the array list
-	free(table->buckets);
+	free_AL(table->buckets);
 
 	// Free the table
 	free(table);
 	return;
 }
 
+// Put a hash pair into the table
 VAL_DTYPE HT_put(HT* table, KEY_DTYPE key, VAL_DTYPE value) {
 
-	// Retrieve hashValue
-	int hashValue = this.hashFunction(key);
+	// Retrieve hash_value
+	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
-	LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
+	LL* bucket = AL_get(table->buckets, hash_value);
 
-	// Check if key already exists
-	for (HashPair<K,V> hashPair: bucket) {
-		if (hashPair.getKey().equals(key)) {
+	// Run through the bucket nodes
+	ND* node = bucket->head;
+	while (node != NULL) {
+
+		// Extract the hash pair
+		HP* pair = node->element;
+
+		// Check if key already exists
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
 
 			// Update value and return old value
-			V oldValue = hashPair.getValue();
-			hashPair.setValue(value);
-			return oldValue;
+			VAL_DTYPE old_value = pair->value;
+			pair->value = value;
+			return old_value;
 		}
+
+		node = node->next;
 	}
 
-	// Add hashPair to bucket
-	bucket.add(new HashPair<>(key, value));
-	this.numEntries += 1;
+	// Add hash_pair to bucket
+	LL_add(bucket, new_HP(key, value));
+	table->num_entries++;
 
 	// Consider rehashing
-	if (((double) this.numEntries) / this.numBuckets > MAX_LOAD_FACTOR)
-		this.rehash();
+	if (((double) table->num_entries) / table->num_buckets > max_load)
+		HT_rehash(table);
 
-	return null;
-
+	return VAL_DTYPE_NULL;
 }
 
+// Get a value from the table
 VAL_DTYPE HT_get(HT* table, KEY_DTYPE key) {
 
-	// Retrieve hashValue
-	int hashValue = this.hashFunction(key);
+	// Retrieve hash_value
+	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
-	LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
+	LL* bucket = AL_get(table->buckets, hash_value);
 
-	// Check if key already exists
-	for (HashPair<K,V> hashPair: bucket) {
-		if (hashPair.getKey().equals(key)) {
+	// Run through the bucket nodes
+	ND* node = bucket->head;
+	while (node != NULL) {
 
-			return hashPair.getValue();
+		// Extract the hash pair
+		HP* pair = node->element;
+
+		// Check if key already exists
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
+
+			// Return value
+			return pair->value;
 		}
-	}
-	// Key doesn't exist
-	return null;
 
+		node = node->next;
+	}
+
+	// Key doesn't exist
+	return VAL_DTYPE_NULL;
 }
 
+// Remove a pair from the table
 VAL_DTYPE HT_remove(HT* table, KEY_DTYPE key) {
 
-	// Retrieve hashValue
-	int hashValue = this.hashFunction(key);
+	// Retrieve hash_value
+	AS_TYPE hash_value = KEY_HASH(key, table->num_buckets);
 
 	// Isolate the bucket in question
-	LinkedList<HashPair<K,V>> bucket = this.buckets.get(hashValue);
+	LL* bucket = AL_get(table->buckets, hash_value);
 
-	// Check if key already exists
-	for (HashPair<K,V> hashPair: bucket) {
-		if (hashPair.getKey().equals(key)) {
+	// Run through the bucket nodes
+	ND* node = bucket->head;
+	while (node != NULL) {
 
-			// Delete hashPair and return value
-			V value = hashPair.getValue();
-			bucket.remove(hashPair);
-			this.numEntries -= 1;
+		// Extract the hash pair
+		HP* pair = node->element;
+
+		// Check if key already exists
+		if (KEY_DTYPE_EQUALS((void*)&(pair->key), (void*)&(key)) {
+
+			// Delete hash_pair and return value
+			VAL_DTYPE value = pair->value;
+			LL_remove(bucket, pair);
+			table->num_entries--;
 			return value;
 		}
-	}
-	// Key doesn't exist
-	return null;
 
+		node = node->next;
+	}
+
+	// Key doesn't exist
+	return VAL_DTYPE_NULL;
 }
 
+// Add more buckets to the table to improve lookup times
 void HT_rehash(HT* table) {
 
 	// Double capacity
