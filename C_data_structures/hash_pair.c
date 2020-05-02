@@ -1,21 +1,24 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "hash_pair.h"
 
 // Constructor
-HP* new_HP(KEY_DTYPE key, VAL_DTYPE value) {
+HP* new_HP(KEY_DTYPE* key, VAL_DTYPE* value) {
 
 	// Allocate the memory for a hash pair
 	HP* pair = (HP*)malloc(sizeof(HP));
 
 	// Set the fields
-	pair->key = key;
+	pair->key   = key;
 	pair->value = value;
 	return pair;
 }
 
 // Destructor
-void free_HP(HP* pair) {
+void HP_free(HP* pair) {
+
+	// Free the fields
+	KEY_DTYPE_FREE(pair->key);
+	VAL_DTYPE_FREE(pair->value);
 
 	// Free the hash pair
 	free(pair);
@@ -23,8 +26,6 @@ void free_HP(HP* pair) {
 }
 
 // Comparison operator
-BOOL HP_equals(const void * a, const void * b) {
-
-	return KEY_DTYPE_EQUALS((void*)&(((HP*)a)->key), (void*)&(((HP*)b)->key))
-	    && VAL_DTYPE_EQUALS((void*)&(((HP*)a)->value), (void*)&(((HP*)b)->value));
+BOOL HP_equals(HP* a, HP* b) {
+	return KEY_DTYPE_EQUALS(a->key, b->key) && VAL_DTYPE_EQUALS(a->value, b->value);
 }

@@ -40,50 +40,32 @@ String* new_string(char* entry) {
 }
 
 // Comparison methods
-BOOL integer_equals(const void * a, const void * b) {
-
-	// Cast into proper type
-	Integer* one = (Integer*)a;
-	Integer* two = (Integer*)b;
-
-	// Compare
-	return (one->entry == two->entry);
+BOOL integer_equals(Integer* a, Integer* b) {
+	return a->entry == b->entry;
 }
 
-BOOL double_equals(const void * a, const void * b) {
-
-	// Cast into proper type
-	Double* one = (Double*)a;
-	Double* two = (Double*)b;
-
-	// Compare
-	return (fabs(one->entry - two->entry) < EPSILON);
+BOOL double_equals(Double* a, Double* b) {
+	return fabs(a->entry - b->entry) < EPSILON;
 }
 
-BOOL string_equals(const void * a, const void * b) {
-
-	// Cast into proper type
-	String* one = (String*)a;
-	String* two = (String*)b;
-
-	// Compare
-	return !strcmp(one->entry, two->entry);
+BOOL string_equals(String* a, String* b) {
+	return !strcmp(a->entry, b->entry);
 }
 
 // Recyclers
-void free_integer(Integer* wrapper) {
+void integer_free(Integer* wrapper) {
 
 	free(wrapper);
 	return;
 }
 
-void free_double(Double* wrapper) {
+void double_free(Double* wrapper) {
 
 	free(wrapper);
 	return;
 }
 
-void free_string(String* wrapper) {
+void string_free(String* wrapper) {
 
 	free(wrapper->entry);
 	free(wrapper);
