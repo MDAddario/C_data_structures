@@ -1,39 +1,40 @@
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include "define.h"
 
 // Constructors
-Integer* new_integer(int value) {
+Integer* new_integer(int entry) {
 
 	// Allocate memory
 	Integer* wrapper = (Integer*)malloc(sizeof(Integer));
 
 	// Init field
-	wrapper->value = value;
+	wrapper->entry = entry;
 
 	return wrapper;
 }
 
-Double* new_double(double value) {
+Double* new_double(double entry) {
 
 	// Allocate memory
 	Double* wrapper = (Double*)malloc(sizeof(Double));
 
 	// Init field
-	wrapper->value = value;
+	wrapper->entry = entry;
 
 	return wrapper;
 }
 
-String* new_string(char* value) {
+String* new_string(char* entry) {
 
 	// Allocate memory
 	String* wrapper = (String*)malloc(sizeof(String));
 
-	// Copy the field value
-	long size = strlen(value) + 1l; // Include the null character ofc
-	wrapper->value = (char*)malloc(size * sizeof(char));
-	strcpy(wrapper->value, value);
+	// Copy the field entry
+	long size = strlen(entry) + 1l; // Include the null character ofc
+	wrapper->entry = (char*)malloc(size * sizeof(char));
+	strcpy(wrapper->entry, entry);
 
 	return wrapper;
 }
@@ -46,7 +47,7 @@ BOOL integer_equals(const void * a, const void * b) {
 	Integer* two = (Integer*)b;
 
 	// Compare
-	return (one->value == two->value);
+	return (one->entry == two->entry);
 }
 
 BOOL double_equals(const void * a, const void * b) {
@@ -56,7 +57,7 @@ BOOL double_equals(const void * a, const void * b) {
 	Double* two = (Double*)b;
 
 	// Compare
-	return (fabs(one->value - two->value) < EPSILON);
+	return (fabs(one->entry - two->entry) < EPSILON);
 }
 
 BOOL string_equals(const void * a, const void * b) {
@@ -66,7 +67,7 @@ BOOL string_equals(const void * a, const void * b) {
 	String* two = (String*)b;
 
 	// Compare
-	return !strcmp(one->value, two->value);
+	return !strcmp(one->entry, two->entry);
 }
 
 // Recyclers
@@ -84,7 +85,7 @@ void free_double(Double* wrapper) {
 
 void free_string(String* wrapper) {
 
-	free(wrapper->value);
+	free(wrapper->entry);
 	free(wrapper);
 	return;
 }
