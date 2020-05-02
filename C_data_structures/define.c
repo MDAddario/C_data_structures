@@ -54,21 +54,14 @@ BOOL string_equals(String* a, String* b) {
 
 // Recyclers
 void integer_free(Integer* wrapper) {
-
 	free(wrapper);
-	return;
 }
 
 void double_free(Double* wrapper) {
-
 	free(wrapper);
-	return;
 }
 
 void string_free(String* wrapper) {
-
 	free(wrapper->entry);
 	free(wrapper);
-	return;
 }
-
