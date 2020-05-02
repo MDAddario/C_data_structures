@@ -4,6 +4,14 @@
 #include "hash_table.h"
 
 // Hash functions
+STYPE integer_hash(Integer* wrapper, STYPE num_buckets) {
+	return general_hash((STYPE)(wrapper->entry), num_buckets);
+}
+
+STYPE double_hash(Double* wrapper, STYPE num_buckets) {
+	return general_hash((STYPE)(wrapper->entry), num_buckets);
+}
+
 STYPE string_hash(String* wrapper, STYPE num_buckets) {
 
 	// Use the java hashcode
@@ -13,6 +21,17 @@ STYPE string_hash(String* wrapper, STYPE num_buckets) {
 	for (STYPE j = 0; j < size; j++)
 		hash_code = 31 * hash_code + wrapper->entry[j];
 
+	return general_hash(hash_code, num_buckets);
+}
+
+STYPE general_hash(STYPE hash_code, STYPE num_buckets) {
+
+	// Check for issues
+	if (hash_code < 0) {
+		printf("There is an issue with the hash code.\n");
+		exit(0);
+	}
+	// Modulate by bucket number
 	return hash_code % num_buckets;
 }
 

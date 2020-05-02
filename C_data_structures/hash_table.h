@@ -3,7 +3,10 @@
 #define MAX_LOAD  0.75         // Maximum load factor (avg. entries per bucket)
 
 // Hash functions
-STYPE string_hash(String* wrapper, STYPE num_buckets);
+STYPE integer_hash(Integer* wrapper, STYPE num_buckets);
+STYPE double_hash (Double*  wrapper, STYPE num_buckets);
+STYPE string_hash (String*  wrapper, STYPE num_buckets);
+STYPE general_hash(STYPE  hash_code, STYPE num_buckets);
 
 // Struct for the hash table
 typedef struct struct_HT {
