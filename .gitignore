@@ -1,3 +1,4 @@
 C_data_structures/Makefile
 C_data_structures/*.o
 C_data_structures/tests
+C_data_structures/todo.txt
