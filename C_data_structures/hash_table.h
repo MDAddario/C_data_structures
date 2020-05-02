@@ -1,11 +1,12 @@
+#include "define.h"
 #include "array_list.h"
 #include "linked_list.h"
 #define KEY_DTYPE        char*          // Data type of keys
 #define KEY_DTYPE_EQUALS string_equals  // Function used to compare KEY_DTYPE
 #define KEY_HASH         string_hash    // Function to create hash value from key
-#define VAL_DTYPE        int            // Data type of values
-#define VAL_DTYPE_NULL   -393           // NULL definition corresponding to VAL_DTYPE
-#define KEY_DTYPE_EQUALS int_equals     // Function used to compare VAL_DTYPE
+#define VAL_DTYPE        short          // Data type of values
+#define VAL_DTYPE_NULL   -404           // NULL definition corresponding to VAL_DTYPE
+#define KEY_DTYPE_EQUALS short_equals   // Function used to compare VAL_DTYPE
 
 // Struct for the hash pairs
 typedef struct struct_HP {
@@ -15,12 +16,12 @@ typedef struct struct_HP {
 
 } HP;
 
-HP*        new_HP(                 KEY_DTYPE key, VAL_DTYPE value);....
-void       free_HP(      HP* pair);....................................
-KEY_DTYPE  HP_get_key(   HP* pair);....................................
-VAL_DTYPE  HP_get_value( HP* pair);....................................
-void       HP_set_key(   HP* pair, KEY_DTYPE key);.....................
-void       HP_set_value( HP* pair,                VAL_DTYPE value);....
+HP*        new_HP(                 KEY_DTYPE key, VAL_DTYPE value);
+void       free_HP(      HP* pair);................................
+KEY_DTYPE  HP_get_key(   HP* pair);................................
+VAL_DTYPE  HP_get_value( HP* pair);................................
+void       HP_set_key(   HP* pair, KEY_DTYPE key);.................
+void       HP_set_value( HP* pair,                VAL_DTYPE value);
 
 // Struct for the hash table
 typedef struct struct_HT {

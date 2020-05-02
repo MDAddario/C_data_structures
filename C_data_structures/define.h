@@ -1,3 +1,6 @@
+#include "array_list.h"
+#include "linked_list.h"
+#include "hash_table.h"
 #define TRUE            1
 #define FALSE           0
 #define BOOL            int
@@ -9,4 +12,4 @@ BOOL      int_equals   (const void * a, const void * b);
 BOOL      long_equals  (const void * a, const void * b);
 BOOL      double_equals(const void * a, const void * b);
 BOOL      string_equals(const void * a, const void * b);
-AS_STYPE  string_hash  (char* string);
+AS_STYPE  string_hash  (char* string);                  
