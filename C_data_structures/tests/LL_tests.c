@@ -18,20 +18,20 @@ int main() {
 	for (int i = 0; i < 10; i++) {
 		LL* linked_list_2 = new_LL();
 		for (long j = 0; j < 1000000; j++) {
-			LL_add_end(linked_list_2, 321);
+			LL_add_end(linked_list_2, new_integer(321));
 		}
-		free_LL(linked_list_2);
+		LL_free(linked_list_2);
 		printf("%d%% ", (i + 1) * 10);
 	}
 	printf("\n");
 
-	LL_DTYPE LL_offsets[] = {1000, 2000, 3000};
+	STYPE LL_offsets[] = {1000, 2000, 3000};
 
 	// LL_add_start()
-	LL_DTYPE LL_value;
+	LL_DTYPE* LL_value;
 	for (STYPE size = 1; size <= LL_capacity; size++) {
 
-		LL_value = (LL_DTYPE)size + LL_offsets[0];
+		LL_value = new_integer(size + LL_offsets[0]);
 		LL_add_start(linked_list, LL_value);
 		assert_STYPE(linked_list->size, size, "LL_add_start()");
 	}
@@ -39,14 +39,14 @@ int main() {
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index);
-		assert_LL_DTYPE(LL_value, LL_offsets[0] + LL_capacity - index, "LL_add_start()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[0] + LL_capacity - index), "LL_add_start()");
 		assert_STYPE(linked_list->size, LL_capacity, "LL_add_start()");
 	}
 
 	// LL_add_end()
 	for (STYPE size = 1; size <= LL_capacity; size++) {
 
-		LL_value = (LL_DTYPE)size + LL_offsets[1];
+		LL_value = new_integer(size + LL_offsets[1]);
 		LL_add_end(linked_list, LL_value);
 		assert_STYPE(linked_list->size, size + LL_capacity, "LL_end()");
 	}
@@ -54,26 +54,26 @@ int main() {
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index + LL_capacity);
-		assert_LL_DTYPE(LL_value, LL_offsets[1] + index + 1, "LL_end()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[1] + index + 1), "LL_end()");
 		assert_STYPE(linked_list->size, 2 * LL_capacity, "LL_end()");
 	}
 
 	// LL_add_at()
-	LL_add_at(linked_list, LL_offsets[2], LL_capacity);
+	LL_add_at(linked_list, new_integer(LL_offsets[2]), LL_capacity);
 	assert_STYPE(linked_list->size, 2 * LL_capacity + 1, "LL_add_at()");
 
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index);
-		assert_LL_DTYPE(LL_value, LL_offsets[0] + LL_capacity - index, "LL_add_at()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[0] + LL_capacity - index), "LL_add_at()");
 		LL_value = LL_get(linked_list, index + LL_capacity + 1);
-		assert_LL_DTYPE(LL_value, LL_offsets[1] + index + 1, "LL_add_at()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[1] + index + 1), "LL_add_at()");
 	}
 	LL_value = LL_get(linked_list, LL_capacity);
-	assert_LL_DTYPE(LL_value, LL_offsets[2], "LL_add_at()");
+	assert_LL_DTYPE(LL_value, new_integer(LL_offsets[2]), "LL_add_at()");
 
-	assert_BOOL(FALSE, LL_add_at(linked_list, LL_offsets[0], -1), "LL_add_at()");
-	assert_BOOL(FALSE, LL_add_at(linked_list, LL_offsets[0], 2 * LL_capacity + 2), "LL_add_at()");
+	assert_BOOL(FALSE, LL_add_at(linked_list, new_integer(LL_offsets[0]), -1), "LL_add_at()");
+	assert_BOOL(FALSE, LL_add_at(linked_list, new_integer(LL_offsets[0]), 2 * LL_capacity + 2), "LL_add_at()");
 
 	// LL_get()
 	for (STYPE index = 0; index < 2 * LL_capacity; index++) {
@@ -96,45 +96,45 @@ int main() {
 
 	for (STYPE size = 1; size <= LL_capacity; size++) {
 
-		LL_value = (LL_DTYPE)size + LL_offsets[0];
+		LL_value = new_integer(size + LL_offsets[0]);
 		LL_add_start(linked_list, LL_value);
-		LL_value = (LL_DTYPE)size + LL_offsets[1];
+		LL_value = new_integer(size + LL_offsets[1]);
 		LL_add_end(linked_list, LL_value);
 	}
 
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index);
-		assert_LL_DTYPE(LL_value, LL_offsets[0] + LL_capacity - index, "LL_clear()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[0] + LL_capacity - index), "LL_clear()");
 		LL_value = LL_get(linked_list, index + LL_capacity);
-		assert_LL_DTYPE(LL_value, LL_offsets[1] + index + 1, "LL_clear()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[1] + index + 1), "LL_clear()");
 		assert_STYPE(linked_list->size, 2 * LL_capacity, "LL_clear()");
 	}
-	LL_add_at(linked_list, LL_offsets[2], LL_capacity);
+	LL_add_at(linked_list, new_integer(LL_offsets[2]), LL_capacity);
 	LL_value = LL_get(linked_list, LL_capacity);
-	assert_LL_DTYPE(LL_value, LL_offsets[2], "LL_add_at()");
+	assert_LL_DTYPE(LL_value, new_integer(LL_offsets[2]), "LL_add_at()");
 
 	// LL_index_of()
 	STYPE LL_location;
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
-		LL_location = LL_index_of(linked_list, LL_offsets[0] + LL_capacity - index);
+		LL_location = LL_index_of(linked_list, new_integer(LL_offsets[0] + LL_capacity - index));
 		assert_STYPE(index, LL_location, "LL_index_of()");
-		LL_location = LL_index_of(linked_list, LL_offsets[1] + index + 1);
+		LL_location = LL_index_of(linked_list, new_integer(LL_offsets[1] + index + 1));
 		assert_STYPE(index + LL_capacity + 1, LL_location, "LL_index_of()");
 	}
-	LL_location = LL_index_of(linked_list, LL_offsets[2]);
+	LL_location = LL_index_of(linked_list, new_integer(LL_offsets[2]));
 	assert_STYPE(LL_capacity, LL_location, "LL_index_of()");
 
 	// LL_contains()
-	for (LL_DTYPE increment = 1; increment <= LL_capacity; increment++) {
+	for (STYPE increment = 1; increment <= LL_capacity; increment++) {
 
-		assert_BOOL(TRUE, LL_contains(linked_list, LL_offsets[0] + increment), "LL_contains()");
-		assert_BOOL(TRUE, LL_contains(linked_list, LL_offsets[1] + increment), "LL_contains()");
-		assert_BOOL(FALSE, LL_contains(linked_list, LL_offsets[0] - increment), "LL_contains()");
-		assert_BOOL(FALSE, LL_contains(linked_list, LL_offsets[1] - increment), "LL_contains()");
+		assert_BOOL(TRUE, LL_contains(linked_list, new_integer(LL_offsets[0] + increment)), "LL_contains()");
+		assert_BOOL(TRUE, LL_contains(linked_list, new_integer(LL_offsets[1] + increment)), "LL_contains()");
+		assert_BOOL(FALSE, LL_contains(linked_list, new_integer(LL_offsets[0] - increment)), "LL_contains()");
+		assert_BOOL(FALSE, LL_contains(linked_list, new_integer(LL_offsets[1] - increment)), "LL_contains()");
 	}
-	assert_BOOL(TRUE, LL_contains(linked_list, LL_offsets[2]), "LL_contains()");
+	assert_BOOL(TRUE, LL_contains(linked_list, new_integer(LL_offsets[2])), "LL_contains()");
 
 	// Pray this still holds
 	assert_STYPE(linked_list->size, 2 * LL_capacity + 1, "LL_prayers()");
@@ -150,18 +150,18 @@ int main() {
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index);
-		assert_LL_DTYPE(LL_value, LL_offsets[0] + LL_capacity - index, "LL_remove_at()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[0] + LL_capacity - index), "LL_remove_at()");
 		LL_value = LL_get(linked_list, index + LL_capacity);
-		assert_LL_DTYPE(LL_value, LL_offsets[1] + index + 1, "LL_remove_at()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[1] + index + 1), "LL_remove_at()");
 	}
 
 	// LL_remove_value()
-	assert_BOOL(FALSE, LL_remove_value(linked_list, -1), "LL_remove_value()");
-	assert_BOOL(FALSE, LL_remove_value(linked_list, LL_offsets[2]), "LL_remove_value()");
+	assert_BOOL(FALSE, LL_remove_value(linked_list, new_integer(-1)), "LL_remove_value()");
+	assert_BOOL(FALSE, LL_remove_value(linked_list, new_integer(LL_offsets[2])), "LL_remove_value()");
 
 	for (STYPE size = 1; size <= LL_capacity; size++) {
 
-		LL_value = (LL_DTYPE)size + LL_offsets[0];
+		LL_value = new_integer(size + LL_offsets[0]);
 		assert_BOOL(TRUE, LL_remove_value(linked_list, LL_value), "LL_remove_value()");
 		assert_STYPE(linked_list->size, 2 * LL_capacity - size, "LL_remove_value()");
 	}
@@ -169,7 +169,7 @@ int main() {
 	for (STYPE index = 0; index < LL_capacity; index++) {
 
 		LL_value = LL_get(linked_list, index);
-		assert_LL_DTYPE(LL_value, LL_offsets[1] + index + 1, "LL_remove_remove_value()");
+		assert_LL_DTYPE(LL_value, new_integer(LL_offsets[1] + index + 1), "LL_remove_remove_value()");
 	}
 
 	// LL_remove_end()
@@ -183,7 +183,7 @@ int main() {
 	assert_BOOL(FALSE, LL_remove_end(linked_list), "LL_remove_end()");
 
 	// LL_remove_start()
-	LL_add_end(linked_list, 321);
+	LL_add_end(linked_list, new_integer(321));
 	assert_BOOL(TRUE, LL_remove_start(linked_list), "LL_remove_start()");
 
 	assert_STYPE(linked_list->size, 0, "LL_remove_start()");

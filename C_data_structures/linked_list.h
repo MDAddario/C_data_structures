@@ -1,7 +1,7 @@
 #include "hash_pair.h"
-#define LL_DTYPE         HP         // Data type of objects to store
-#define LL_DTYPE_EQUALS  HP_equals  // Function used to compare linked list values
-#define LL_DTYPE_FREE    HP_free    // Function used to free linked list values
+#define LL_DTYPE         Integer         // Data type of objects to store
+#define LL_DTYPE_EQUALS  integer_equals  // Function used to compare linked list values
+#define LL_DTYPE_FREE    integer_free    // Function used to free linked list values
 
 // Struct for the nodes
 typedef struct struct_ND {

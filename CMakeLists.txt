@@ -18,4 +18,4 @@ add_executable(C_data_structures
 				C_data_structures/hash_table.h
 				C_data_structures/tests/testing.c
 				C_data_structures/tests/testing.h
-				C_data_structures/tests/AL_tests.c)
+				C_data_structures/tests/LL_tests.c)
