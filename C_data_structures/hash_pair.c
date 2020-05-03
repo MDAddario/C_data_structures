@@ -20,8 +20,8 @@ void HP_free(HP* pair) {
 	// KEY_DTYPE_FREE(pair->key);
 	// VAL_DTYPE_FREE(pair->value);
 
-	// Free the hash pair
-	free(pair);
+	// DO NOT FREE THE HASH PAIR OR ELSE REHASH WILL BREAK
+	// free(pair);
 }
 
 // Comparison operator

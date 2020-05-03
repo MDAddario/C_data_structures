@@ -110,7 +110,11 @@ void LL_add_end(LL* list, LL_DTYPE* value) {
 // Clear the list
 void LL_clear(LL* list) {
 
-	printf("WHY IS THIS RUNNING\n");
+	// TODO: FIGURE OUT WHY THESE NEXT THREE LINES ARE NECESSARY
+	// Terminate if empty list
+	if (LL_is_empty(list))
+		return;
+	// TODO: FIGURE OUT WHY THE LAST THREE LINES ARE NECESSARY
 
 	// Free all the nodes and their elements
 	ND* node = list->head;

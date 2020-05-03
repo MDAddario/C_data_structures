@@ -192,7 +192,7 @@ void HT_rehash(HT* table) {
 			// Extract the hash pair
 			HP* pair = node->element;
 
-			// Retrieve hash_value
+			// Retrieve new hash_value
 			STYPE hash_value = HASH_FUNC(pair->key, table->num_buckets);
 
 			// Isolate the bucket in question

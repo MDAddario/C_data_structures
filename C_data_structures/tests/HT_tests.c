@@ -31,7 +31,7 @@ int main() {
 
 	// get()
 	for (STYPE i = 0; i < 3; i++)
-		assert_VAL_DTYPE(HT_get(table, my_keys[i]), new_integer(i+1), "Error 10");
+		assert_VAL_DTYPE(HT_get(table, my_keys[i]), my_values[i], "Error 10");
 
 	for (STYPE i = 3; i < 5; i++)
 		assert_NULL(HT_get(table, my_keys[i]), "Error 11");
@@ -47,7 +47,7 @@ int main() {
 	assert_STYPE(table->num_buckets, 5, "Error 16");
 
 	for (STYPE i = 0; i < 3; i++)
-		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), new_integer(i+1), "Error 17");
+		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), my_values[i], "Error 17");
 
 	assert_STYPE(table->num_entries, 0, "Error 18");
 	assert_STYPE(table->num_buckets, 5, "Error 19");
@@ -60,9 +60,9 @@ int main() {
 	assert_STYPE(table->num_buckets, 10, "Error 22");
 
 	for (STYPE i = 0; i < 4; i++)
-		assert_VAL_DTYPE(HT_put(table, my_keys[i], my_values[i]), new_integer(i+1), "Error 22.5");
+		assert_VAL_DTYPE(HT_put(table, my_keys[i], my_values[i]), my_values[i], "Error 22.5");
 	for (STYPE i = 0; i < 4; i++)
-		assert_VAL_DTYPE(HT_get(table, my_keys[i]), new_integer(i+1), "Error 23");
+		assert_VAL_DTYPE(HT_get(table, my_keys[i]), my_values[i], "Error 23");
 	for (STYPE i = 4; i < 5; i++)
 		assert_NULL(HT_get(table, my_keys[i]), "Error 24");
 
@@ -70,7 +70,7 @@ int main() {
 	assert_STYPE(table->num_buckets, 10, "Error 26");
 
 	for (STYPE i = 0; i < 4; i++)
-		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), new_integer(i+1), "Error 27");
+		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), my_values[i], "Error 27");
 
 	assert_STYPE(table->num_entries, 0, "Error 28");
 	assert_STYPE(table->num_buckets, 10, "Error 29");
