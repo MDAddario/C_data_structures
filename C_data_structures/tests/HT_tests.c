@@ -9,112 +9,81 @@ int main() {
 	// Create a hash table
 	HT* table = new_HT(5);
 
-	if (table->num_entries != 0)
-		printf("Error 1");
-	if (table->num_buckets != 5)
-		printf("Error 2");
+	assert_STYPE(table->num_entries, 0, "Error 1");
+	assert_STYPE(table->num_buckets, 5, "Error 2");
 
 	// Random value pairs
-	char* my_keys[] = {"one", "two", "three", "four", "five"};
-	int my_values[] = {1, 2, 3, 4, 5};
+	String* my_keys[] = {new_string("one"), new_string("two"), new_string("three"), new_string("four"), new_string("five")};
+	Integer* my_values[] = {new_integer(1), new_integer(2), new_integer(3), new_integer(4), new_integer(5)};
 
 	// put()
-	for (int i = 0; i < 3; i++)
-		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
-			printf("Error 3");
+	for (STYPE i = 0; i < 3; i++)
+		assert_NULL(HT_put(table, my_keys[i], my_values[i]), "Error 3");
 
-	if (table->num_entries != 3)
-		printf("Error 4");
-	if (table->num_buckets != 5)
-		printf("Error 5");
+	assert_STYPE(table->num_entries, 3, "Error 4");
+	assert_STYPE(table->num_buckets, 5, "Error 5");
 
-	if (HT_put(table, "one", 404) != 1)
-		printf("Error 6");
-	if (HT_put(table, "one", 1) != 404)
-		printf("Error 7");
+	assert_VAL_DTYPE(HT_put(table, new_string("one"), new_integer(404)), new_integer(1), "Error 6");
+	assert_VAL_DTYPE(HT_put(table, new_string("one"), new_integer(1)), new_integer(404), "Error 7");
 
-	if (table->num_entries != 3)
-		printf("Error 8");
-	if (table->num_buckets != 5)
-		printf("Error 9");
+	assert_STYPE(table->num_entries, 3, "Error 8");
+	assert_STYPE(table->num_buckets, 5, "Error 9");
 
 	// get()
-	for (int i = 0; i < 3; i++)
-		if (HT_get(table, my_keys[i]) != i + 1)
-			printf("Error 10");
-	for (int i = 3; i < 5; i++)
-		if (HT_get(table, my_keys[i]) != VAL_DTYPE_NULL)
-			printf("Error 11");
+	for (STYPE i = 0; i < 3; i++)
+		assert_VAL_DTYPE(HT_get(table, my_keys[i]), new_integer(i+1), "Error 10");
 
-	if (table->num_entries != 3)
-		printf("Error 12");
-	if (table->num_buckets != 5)
-		printf("Error 13");
+	for (STYPE i = 3; i < 5; i++)
+		assert_NULL(HT_get(table, my_keys[i]), "Error 11");
+
+	assert_STYPE(table->num_entries, 3, "Error 12");
+	assert_STYPE(table->num_buckets, 5, "Error 13");
 
 	// remove()
-	for (int i = 3; i < 5; i++)
-		if (HT_remove(table, my_keys[i]) != VAL_DTYPE_NULL)
-			printf("Error 14");
+	for (STYPE i = 3; i < 5; i++)
+		assert_NULL(HT_remove(table, my_keys[i]), "Error 14");
 
-	if (table->num_entries != 3)
-		printf("Error 15");
-	if (table->num_buckets != 5)
-		printf("Error 16");
+	assert_STYPE(table->num_entries, 3, "Error 15");
+	assert_STYPE(table->num_buckets, 5, "Error 16");
 
-	for (int i = 0; i < 3; i++)
-		if (HT_remove(table, my_keys[i]) != i + 1)
-			printf("Error 17");
+	for (STYPE i = 0; i < 3; i++)
+		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), new_integer(i+1), "Error 17");
 
-	if (table->num_entries != 0)
-		printf("Error 18");
-	if (table->num_buckets != 5)
-		printf("Error 19");
+	assert_STYPE(table->num_entries, 0, "Error 18");
+	assert_STYPE(table->num_buckets, 5, "Error 19");
 
 	// rehash()
-	for (int i = 0; i < 4; i++)
-		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
-			printf("Error 20");
+	for (STYPE i = 0; i < 4; i++)
+		assert_NULL(HT_put(table, my_keys[i], my_values[i]), "Error 20");
 
-	if (table->num_entries != 4)
-		printf("Error 21");
-	if (table->num_buckets != 10)
-		printf("Error 22");
+	assert_STYPE(table->num_entries, 4, "Error 21");
+	assert_STYPE(table->num_buckets, 10, "Error 22");
 
-	for (int i = 0; i < 4; i++)
-		if (HT_put(table, my_keys[i], my_values[i]) != i + 1)
-			printf("Error 22.5");
-	for (int i = 0; i < 4; i++)
-		if (HT_get(table, my_keys[i]) != i + 1)
-			printf("Error 23");
-	for (int i = 4; i < 5; i++)
-		if (HT_get(table, my_keys[i]) != VAL_DTYPE_NULL)
-			printf("Error 24");
+	for (STYPE i = 0; i < 4; i++)
+		assert_VAL_DTYPE(HT_put(table, my_keys[i], my_values[i]), new_integer(i+1), "Error 22.5");
+	for (STYPE i = 0; i < 4; i++)
+		assert_VAL_DTYPE(HT_get(table, my_keys[i]), new_integer(i+1), "Error 23");
+	for (STYPE i = 4; i < 5; i++)
+		assert_NULL(HT_get(table, my_keys[i]), "Error 24");
 
-	if (table->num_entries != 4)
-		printf("Error 25");
-	if (table->num_buckets != 10)
-		printf("Error 26");
+	assert_STYPE(table->num_entries, 4, "Error 25");
+	assert_STYPE(table->num_buckets, 10, "Error 26");
 
-	for (int i = 0; i < 4; i++)
-		if (HT_remove(table, my_keys[i]) != i + 1)
-			printf("Error 27");
+	for (STYPE i = 0; i < 4; i++)
+		assert_VAL_DTYPE(HT_remove(table, my_keys[i]), new_integer(i+1), "Error 27");
 
-	if (table->num_entries != 0)
-		printf("Error 28");
-	if (table->num_buckets != 10)
-		printf("Error 29");
+	assert_STYPE(table->num_entries, 0, "Error 28");
+	assert_STYPE(table->num_buckets, 10, "Error 29");
 
-	for (int i = 0; i < 5; i++)
-		if (HT_put(table, my_keys[i], my_values[i]) != VAL_DTYPE_NULL)
-			printf("Error 30");
+	for (STYPE i = 0; i < 5; i++)
+		assert_NULL(HT_put(table, my_keys[i], my_values[i]), "Error 30");
 
-	if (table->num_entries != 5)
-		printf("Error 31");
-	if (table->num_buckets != 10)
-		printf("Error 32");
+	assert_STYPE(table->num_entries, 5, "Error 31");
+	assert_STYPE(table->num_buckets, 10, "Error 32");
 
+	/*
 	// keys()
-	ArrayList<String> keys = table.keys();
+	String** keys = HT_keys(table);
 	if (keys.size() != 5)
 		printf("Error 33");
 	for (int i = 0; i < 5; i++)
@@ -142,6 +111,7 @@ int main() {
 		printf("Error 36.5");
 	if (table->num_buckets != 10)
 		printf("Error 36.8");
+	*/
 
 	// Completes hash table unit tests
 	printf("===== COMPLETED HASH TABLE UNIT TESTS =====\n");

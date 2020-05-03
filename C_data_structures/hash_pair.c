@@ -16,9 +16,9 @@ HP* new_HP(KEY_DTYPE* key, VAL_DTYPE* value) {
 // Destructor
 void HP_free(HP* pair) {
 
-	// Free the fields
-	KEY_DTYPE_FREE(pair->key);
-	VAL_DTYPE_FREE(pair->value);
+	// DO NOT FREE THE FIELD IF YOU CARE ABOUT YOUR DATA
+	// KEY_DTYPE_FREE(pair->key);
+	// VAL_DTYPE_FREE(pair->value);
 
 	// Free the hash pair
 	free(pair);

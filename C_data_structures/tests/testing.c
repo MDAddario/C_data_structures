@@ -26,6 +26,14 @@ void assert_LL_DTYPE(LL_DTYPE* a, LL_DTYPE* b, char* title) {
 	}
 }
 
+void assert_VAL_DTYPE(VAL_DTYPE* a, VAL_DTYPE* b, char* title) {
+
+	if (!VAL_DTYPE_EQUALS(a, b)) {
+		printf("VALUE DTYPE assertion failure at section %s.\n", title);
+		exit(0);
+	}
+}
+
 void assert_BOOL(BOOL a, BOOL b, char* title) {
 
 	if (a != b) {
