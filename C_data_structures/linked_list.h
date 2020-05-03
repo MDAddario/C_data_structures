@@ -38,3 +38,6 @@ BOOL       LL_remove_end(   LL* list);
 BOOL       LL_remove_value( LL* list, LL_DTYPE* value);             
 STYPE      LL_size(         LL* list);                              
 BOOL       LL_equals(       LL* a,    LL* b);                       
+
+// Private helper function
+void LL_free_node(ND* node);

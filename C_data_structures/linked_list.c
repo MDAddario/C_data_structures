@@ -110,11 +110,13 @@ void LL_add_end(LL* list, LL_DTYPE* value) {
 // Clear the list
 void LL_clear(LL* list) {
 
-	// TODO: FIGURE OUT WHY THESE NEXT THREE LINES ARE NECESSARY
+	// TODO: FIGURE OUT WHY THE NEXT THREE LINES ARE NECESSARY
 	// Terminate if empty list
 	if (LL_is_empty(list))
 		return;
 	// TODO: FIGURE OUT WHY THE LAST THREE LINES ARE NECESSARY
+
+	// TODO: THERE ARE SERIOUS ISSUES WITH THIS FUNCTION THAT CRASH HT_TESTS
 
 	// Free all the nodes and their elements
 	ND* node = list->head;
@@ -123,8 +125,7 @@ void LL_clear(LL* list) {
 	while (node != NULL) {
 
 		next = node->next;
-		LL_DTYPE_FREE(node->element);
-		free(node);
+		LL_free_node(node);
 		node = next;
 	}
 
@@ -237,8 +238,7 @@ BOOL LL_remove_at(LL* list, STYPE index) {
 	ND* next = node->next;
 
 	// Re-stitch the network
-	LL_DTYPE_FREE(node->element);
-	free(node);
+	LL_free_node(node);
 	prev->next = next;
 	next->prev = prev;
 
@@ -259,8 +259,7 @@ BOOL LL_remove_start(LL* list) {
 	// Deal with single remaining node
 	if (LL_size(list) == 1) {
 
-		LL_DTYPE_FREE(list->head->element);
-		free(list->head);
+		LL_free_node(list->head);
 		list->head = NULL;
 		list->tail = NULL;
 
@@ -269,8 +268,7 @@ BOOL LL_remove_start(LL* list) {
 		// Isolate and free the head
 		ND* head = list->head;
 		list->head = list->head->next;
-		LL_DTYPE_FREE(head->element);
-		free(head);
+		LL_free_node(head);
 	}
 
 	list->size--;
@@ -293,10 +291,8 @@ BOOL LL_remove_end(LL* list) {
 	// Isolate and free the tail
 	ND* tail = list->tail;
 	list->tail = list->tail->prev;
-	LL_DTYPE_FREE(tail->element);
-	free(tail);
+	LL_free_node(tail);
 	list->size--;
-
 	return TRUE;
 }
 
@@ -338,4 +334,11 @@ BOOL LL_equals(LL* a, LL* b) {
 		node_b = node_b->next;
 	}
 	return TRUE;
+}
+
+// Free a node and its element
+void LL_free_node(ND* node) {
+
+	LL_DTYPE_FREE(node->element);
+	free(node);
 }

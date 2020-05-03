@@ -113,6 +113,9 @@ int main() {
 		printf("Error 36.8");
 	*/
 
+	// HT_free()
+	HT_free(table);
+
 	// Completes hash table unit tests
 	printf("===== COMPLETED HASH TABLE UNIT TESTS =====\n");
 	return 0;
