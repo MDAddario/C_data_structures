@@ -129,12 +129,13 @@ int main() {
 	STYPE AL_location;
 	for (STYPE index = 0; index < AL_capacity; index++) {
 
-		AL_location = AL_index_of(array_list, new_integer(AL_offsets[0]) + AL_capacity - index);
+		AL_location = AL_index_of(array_list, new_integer(AL_offsets[0] + AL_capacity - index));
 		assert_STYPE(index, AL_location, "AL_index_of()");
-		AL_location = AL_index_of(array_list, new_integer(AL_offsets[1]) + index + 1);
+		AL_location = AL_index_of(array_list, new_integer(AL_offsets[1] + index + 1));
 		assert_STYPE(index + AL_capacity + 1, AL_location, "AL_index_of()");
 	}
 	AL_location = AL_index_of(array_list, new_integer(AL_offsets[2]));
+	printf("%ld, %ld\n", AL_capacity, AL_location);
 	assert_STYPE(AL_capacity, AL_location, "AL_index_of()");
 
 	// AL_contains()
